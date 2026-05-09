@@ -1,0 +1,6 @@
+apiVersion: v2
+name: daifend
+description: Daifend AI security platform — edge gateway & telemetry
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

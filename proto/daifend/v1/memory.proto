@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package daifend.v1;
+
+option go_package = "github.com/daifend/platform/gen/daifend/v1;daifendv1";
+
+// Internal RPC surface for memory integrity (optional path alongside REST).
+service MemoryIntegrity {
+  rpc Analyze(AnalyzeRequest) returns (AnalyzeResponse);
+}
+
+message AnalyzeRequest {
+  string tenant_id = 1;
+  repeated FloatVector embeddings = 2;
+  repeated float baseline_centroid = 3;
+  repeated string text_samples = 4;
+  string collection_id = 5;
+}
+
+message FloatVector {
+  repeated float values = 1;
+}
+
+message PromptInjectionSignal {
+  uint32 sample_index = 1;
+  double score = 2;
+  repeated string reasons = 3;
+}
+
+message AnalyzeResponse {
+  double trust_score = 1;
+  double semantic_drift = 2;
+  double poisoned_cluster_risk = 3;
+  repeated uint32 anomalous_indices = 4;
+  string fingerprint = 5;
+  repeated string recommended_actions = 6;
+  repeated PromptInjectionSignal prompt_injection_signals = 7;
+}

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telemetry-service
+  namespace: daifend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: telemetry-service
+  template:
+    metadata:
+      labels:
+        app: telemetry-service
+    spec:
+      containers:
+        - name: telemetry
+          image: daifend/telemetry-service:latest
+          ports:
+            - containerPort: 4001
+          envFrom:
+            - configMapRef:
+                name: daifend-env
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 4001
+            initialDelaySeconds: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi

@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Daifend — Investor Handout (1-page)</title>
+    <style>
+      :root{
+        --bg:#050505;
+        --panel:#0E1117;
+        --border:rgba(255,255,255,.08);
+        --text:#F5F7FA;
+        --muted:#A0AEC0;
+        --blue:#9FB4FF;
+        --amber:#F4B24A;
+        --red:#E26666;
+        --green:#5DD6A1;
+      }
+      *{box-sizing:border-box}
+      body{
+        margin:0;
+        background: var(--bg);
+        color: var(--text);
+        font: 13px/1.52 ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Helvetica, Arial, sans-serif;
+        letter-spacing: .01em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background-image:
+          radial-gradient(1200px 600px at 70% -10%, rgba(159,180,255,.09), transparent 60%),
+          radial-gradient(900px 500px at 10% 0%, rgba(93,214,161,.06), transparent 55%);
+      }
+      .doc{max-width:980px;margin:0 auto;padding:46px 48px 44px}
+      .rule{height:1px;background:var(--border);margin:14px 0 16px}
+      .pill{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:6px 10px;border-radius:999px;border:1px solid var(--border);
+        background:rgba(255,255,255,.02); color:var(--muted); font-size:10px;
+        letter-spacing:.16em; text-transform:uppercase;
+      }
+      .pill.blue{border-color:rgba(159,180,255,.22);background:rgba(159,180,255,.10);color:rgba(245,247,250,.92)}
+      .pill.green{border-color:rgba(93,214,161,.22);background:rgba(93,214,161,.10);color:rgba(245,247,250,.92)}
+      .pill.amber{border-color:rgba(244,178,74,.22);background:rgba(244,178,74,.10);color:rgba(245,247,250,.92)}
+      .pill.red{border-color:rgba(226,102,102,.22);background:rgba(226,102,102,.10);color:rgba(245,247,250,.92)}
+      h1{font-size:30px;line-height:1.12;letter-spacing:-.03em;margin:12px 0 8px}
+      h2{font-size:14px;letter-spacing:-.02em;margin:0 0 8px}
+      h3{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+      p{margin:0 0 8px;color:rgba(245,247,250,.92)}
+      .muted{color:var(--muted)}
+      .grid{display:grid;gap:12px}
+      .cols-2{grid-template-columns:1fr 1fr}
+      .cols-3{grid-template-columns:1fr 1fr 1fr}
+      .panel{
+        border:1px solid var(--border);
+        background:rgba(14,17,23,.72);
+        border-radius:18px;
+        padding:14px 14px 13px;
+        box-shadow:0 0 0 1px rgba(255,255,255,.03), 0 50px 120px -100px rgba(159,180,255,.35);
+      }
+      .kpi{display:flex;align-items:flex-end;justify-content:space-between;gap:10px}
+      .kpi .v{font-size:24px;letter-spacing:-.04em}
+      ul{margin:8px 0 0;padding:0 0 0 16px;color:var(--muted)}
+      li{margin:5px 0}
+      .logo{display:flex;align-items:center;gap:16px;justify-content:space-between}
+      .logo svg{display:block}
+      .tag{font-size:10px;letter-spacing:.20em;text-transform:uppercase;color:rgba(160,174,192,.9)}
+      .foot{margin-top:14px;color:rgba(160,174,192,.85);font-size:10px}
+      .bar{height:1.5px;background:linear-gradient(90deg, rgba(159,180,255,.10), rgba(159,180,255,.65), rgba(93,214,161,.28));border-radius:999px}
+      @media print{
+        .doc{padding:38px 38px 34px}
+      }
+    </style>
+  </head>
+  <body>
+    <main class="doc">
+      <div class="logo">
+        <svg viewBox="0 0 720 180" width="320" height="80" aria-label="Daifend">
+          <g transform="translate(40,35)">
+            <path d="M20 10V100" stroke="#F5F7FA" stroke-width="8" stroke-linecap="round"/>
+            <path d="M20 10C75 10 100 35 100 55C100 75 75 100 20 100" stroke="#F5F7FA" stroke-width="8" stroke-linecap="round"/>
+            <rect x="42" y="42" width="12" height="12" rx="2" fill="#9FB4FF"/>
+            <line x1="100" y1="55" x2="82" y2="55" stroke="#050505" stroke-width="8"/>
+          </g>
+          <g fill="#F5F7FA">
+            <text x="180" y="82" font-family="Inter, Helvetica, Arial, sans-serif" font-size="56" letter-spacing="10" font-weight="300">DAIFEND</text>
+          </g>
+          <text x="182" y="122" font-family="Inter, Helvetica, Arial, sans-serif" font-size="18" letter-spacing="6" fill="#9CA3AF" font-weight="300">
+            SECURING THE AI RUNTIME
+          </text>
+        </svg>
+        <div style="text-align:right">
+          <div class="pill blue">1-page investor handout</div>
+          <div class="tag" style="margin-top:10px">AI-native security control plane</div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <h1>Traditional security protects infrastructure. Daifend protects AI systems.</h1>
+      <p class="muted">
+        Daifend is an AI-native security infrastructure platform for <b>agents</b>, <b>vector memory</b>, and <b>RAG pipelines</b>.
+        It detects manipulation/poisoning, enforces runtime policies, and autonomously restores trust.
+      </p>
+
+      <div style="margin-top:12px" class="grid cols-3">
+        <div class="panel">
+          <h3>Memory integrity</h3>
+          <div class="kpi"><div class="v">Trust</div><span class="pill blue">0–100</span></div>
+          <p class="muted" style="margin-top:8px">Embedding trust scoring, drift detection, lineage explorer, rollback.</p>
+        </div>
+        <div class="panel">
+          <h3>Agent runtime</h3>
+          <div class="kpi"><div class="v">Contain</div><span class="pill green">policy</span></div>
+          <p class="muted" style="margin-top:8px">Tool sandboxing, permissions, reasoning-chain auditability, rollback.</p>
+        </div>
+        <div class="panel">
+          <h3>RAG security</h3>
+          <div class="kpi"><div class="v">Validate</div><span class="pill amber">retrieval</span></div>
+          <p class="muted" style="margin-top:8px">Prompt injection detection, malicious docs quarantine, chain validation.</p>
+        </div>
+      </div>
+
+      <div class="grid cols-2" style="margin-top:12px">
+        <div class="panel">
+          <h3>Why now</h3>
+          <ul>
+            <li>AI systems are becoming autonomous and stateful (memory + tools).</li>
+            <li>Attackers target meaning: poisoning, injection, manipulation, identity spoofing.</li>
+            <li>Enterprises need runtime integrity + recovery, not dashboards.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>What Daifend does</h3>
+          <ul>
+            <li><b>Detect</b>: signatures + drift correlation across memory/RAG/agents.</li>
+            <li><b>Enforce</b>: policy gates on writes, retrieval, and tool execution.</li>
+            <li><b>Heal</b>: isolate blast radius, rollback to trusted baselines, restore trust.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:12px">
+        <div class="grid cols-2">
+          <div>
+            <h3>Investor demo: Live AI Attack Simulation</h3>
+            <p class="muted">Upload malicious document → memory poisoned → agent retrieves → trust drops → detection → isolation → self-heal → report.</p>
+            <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+              <span class="pill red">poison</span>
+              <span class="pill amber">inject</span>
+              <span class="pill blue">detect</span>
+              <span class="pill green">restore</span>
+            </div>
+          </div>
+          <div>
+            <h3>Outputs</h3>
+            <ul>
+              <li>Trust timeline + drift heatmap</li>
+              <li>Threat ticker (AI-native signatures)</li>
+              <li>Self-healing actions feed</li>
+              <li>Structured incident report</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:12px" class="bar"></div>
+      </div>
+
+      <div class="foot">
+        Daifend • AI Security Infrastructure • Handout (1 page)
+      </div>
+    </main>
+  </body>
+</html>
+

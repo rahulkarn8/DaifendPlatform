@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "daifend.name" . }}-api-gateway
+spec:
+  replicas: {{ .Values.apiGateway.replicas }}
+  selector:
+    matchLabels:
+      app: api-gateway
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: "{{ .Values.apiGateway.image }}:{{ .Values.apiGateway.tag }}"
+          ports:
+            - containerPort: {{ .Values.apiGateway.service.port }}
+          env:
+            - name: NATS_URL
+              value: {{ .Values.env.natsUrl | quote }}
+            - name: CORS_ORIGINS
+              value: {{ .Values.env.corsOrigins | quote }}
+            - name: JWT_SECRET
+              value: {{ .Values.secrets.jwtSecret | default "dev-only" | quote }}
+            - name: INTERNAL_SERVICE_TOKEN
+              value: {{ .Values.secrets.internalToken | default "dev-only" | quote }}

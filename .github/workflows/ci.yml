@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: Prisma generate
+        run: npm run db:generate --workspace=@daifend/web
+        env:
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      - run: npm run lint --workspace=@daifend/web
+      - run: npm run build --workspace=@daifend/web
+
+  memory-engine:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/memory-integrity-engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt pytest
+      - run: pytest

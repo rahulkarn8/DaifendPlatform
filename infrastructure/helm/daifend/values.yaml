@@ -1,0 +1,26 @@
+global:
+  imageRegistry: ""
+  imagePullSecrets: []
+
+apiGateway:
+  image: daifend/api-gateway
+  tag: latest
+  replicas: 2
+  service:
+    type: ClusterIP
+    port: 8080
+
+telemetry:
+  image: daifend/telemetry-service
+  tag: latest
+  replicas: 2
+  service:
+    port: 4001
+
+env:
+  natsUrl: nats://nats:4222
+  corsOrigins: "http://127.0.0.1:3000"
+
+secrets:
+  jwtSecret: ""
+  internalToken: ""

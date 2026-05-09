@@ -1,0 +1,37 @@
+<!-- DAIFEND MAIN LOGO SVG -->
+<svg width="720" height="180" viewBox="0 0 720 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Symbol -->
+  <g transform="translate(40,35)">
+    <!-- Outer D -->
+    <path d="M20 10V100" stroke="#F5F7FA" stroke-width="8" stroke-linecap="round"/>
+    <path d="M20 10C75 10 100 35 100 55C100 75 75 100 20 100" stroke="#F5F7FA" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Inner semantic square -->
+    <rect x="42" y="42" width="12" height="12" rx="2" fill="#9FB4FF"/>
+
+    <!-- Minimal break -->
+    <line x1="100" y1="55" x2="82" y2="55" stroke="black" stroke-width="8"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g fill="#F5F7FA">
+    <text x="180" y="82"
+      font-family="Inter, Helvetica, Arial, sans-serif"
+      font-size="56"
+      letter-spacing="10"
+      font-weight="300">
+      DAIFEND
+    </text>
+  </g>
+
+  <!-- Tagline -->
+  <text x="182" y="122"
+    font-family="Inter, Helvetica, Arial, sans-serif"
+    font-size="18"
+    letter-spacing="6"
+    fill="#9CA3AF"
+    font-weight="300">
+    SECURING THE AI RUNTIME
+  </text>
+</svg>
+

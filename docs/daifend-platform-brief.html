@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Daifend — AI Security Infrastructure Platform Brief</title>
+    <style>
+      :root{
+        --bg:#050505;
+        --panel:#0E1117;
+        --border:rgba(255,255,255,.08);
+        --text:#F5F7FA;
+        --muted:#A0AEC0;
+        --blue:#9FB4FF;
+        --amber:#F4B24A;
+        --red:#E26666;
+        --green:#5DD6A1;
+      }
+      *{box-sizing:border-box}
+      html,body{height:100%}
+      body{
+        margin:0;
+        background: var(--bg);
+        color: var(--text);
+        font: 14px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Helvetica, Arial, sans-serif;
+        letter-spacing: .01em;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background-image:
+          radial-gradient(1200px 600px at 70% -10%, rgba(159,180,255,.09), transparent 60%),
+          radial-gradient(900px 500px at 10% 0%, rgba(93,214,161,.06), transparent 55%);
+      }
+      .doc{max-width:980px;margin:0 auto;padding:56px 52px 72px}
+      .rule{height:1px;background:var(--border);margin:18px 0 22px}
+      .pill{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:6px 10px;border-radius:999px;border:1px solid var(--border);
+        background:rgba(255,255,255,.02); color:var(--muted); font-size:11px;
+        letter-spacing:.16em; text-transform:uppercase;
+      }
+      .pill.blue{border-color:rgba(159,180,255,.22);background:rgba(159,180,255,.10);color:rgba(245,247,250,.92)}
+      .pill.green{border-color:rgba(93,214,161,.22);background:rgba(93,214,161,.10);color:rgba(245,247,250,.92)}
+      .pill.amber{border-color:rgba(244,178,74,.22);background:rgba(244,178,74,.10);color:rgba(245,247,250,.92)}
+      .pill.red{border-color:rgba(226,102,102,.22);background:rgba(226,102,102,.10);color:rgba(245,247,250,.92)}
+      h1{font-size:34px;line-height:1.15;letter-spacing:-.03em;margin:14px 0 10px}
+      h2{font-size:18px;letter-spacing:-.02em;margin:0 0 10px}
+      h3{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+      p{margin:0 0 10px;color:rgba(245,247,250,.92)}
+      .muted{color:var(--muted)}
+      .grid{display:grid;gap:14px}
+      .cols-2{grid-template-columns:1fr 1fr}
+      .cols-3{grid-template-columns:1fr 1fr 1fr}
+      .panel{
+        border:1px solid var(--border);
+        background:rgba(14,17,23,.72);
+        border-radius:18px;
+        padding:16px 16px 15px;
+        box-shadow:0 0 0 1px rgba(255,255,255,.03), 0 50px 120px -100px rgba(159,180,255,.35);
+      }
+      .kpi{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+      .kpi .v{font-size:28px;letter-spacing:-.04em}
+      .kpi .s{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+      ul{margin:10px 0 0;padding:0 0 0 18px;color:var(--muted)}
+      li{margin:6px 0}
+      .logo{display:flex;align-items:center;gap:18px}
+      .logo svg{display:block}
+      .logo .tag{font-size:11px;letter-spacing:.20em;text-transform:uppercase;color:rgba(160,174,192,.9)}
+      .callout{
+        border:1px solid rgba(159,180,255,.18);
+        background:linear-gradient(145deg, rgba(159,180,255,.10), rgba(255,255,255,.02));
+        border-radius:18px;
+        padding:16px;
+      }
+      .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+      .table{width:100%;border-collapse:separate;border-spacing:0}
+      .table th,.table td{border-top:1px solid var(--border);padding:10px 10px;text-align:left;font-size:12px}
+      .table th{color:var(--muted);font-weight:600}
+      .table tr:first-child th,.table tr:first-child td{border-top:none}
+      .foot{margin-top:22px;color:rgba(160,174,192,.85);font-size:11px}
+      .pagebreak{break-before: page}
+      @media print{
+        .doc{padding:42px 42px 56px}
+        a{color:inherit;text-decoration:none}
+      }
+    </style>
+  </head>
+  <body>
+    <main class="doc">
+      <div class="logo">
+        <!-- Brand lockup (adapted from provided SVG, transparent background) -->
+        <svg viewBox="0 0 720 180" width="360" height="90" aria-label="Daifend">
+          <g transform="translate(40,35)">
+            <path d="M20 10V100" stroke="#F5F7FA" stroke-width="8" stroke-linecap="round"/>
+            <path d="M20 10C75 10 100 35 100 55C100 75 75 100 20 100" stroke="#F5F7FA" stroke-width="8" stroke-linecap="round"/>
+            <rect x="42" y="42" width="12" height="12" rx="2" fill="#9FB4FF"/>
+            <line x1="100" y1="55" x2="82" y2="55" stroke="#050505" stroke-width="8"/>
+          </g>
+          <g fill="#F5F7FA">
+            <text x="180" y="82" font-family="Inter, Helvetica, Arial, sans-serif" font-size="56" letter-spacing="10" font-weight="300">DAIFEND</text>
+          </g>
+          <text x="182" y="122" font-family="Inter, Helvetica, Arial, sans-serif" font-size="18" letter-spacing="6" fill="#9CA3AF" font-weight="300">
+            SECURING THE AI RUNTIME
+          </text>
+        </svg>
+        <div>
+          <div class="pill blue">AI security infrastructure</div>
+          <div class="tag" style="margin-top:10px">Platform brief — enterprise AI-native defense</div>
+        </div>
+      </div>
+
+      <div class="rule"></div>
+
+      <h1>The operating system for AI security.</h1>
+      <p class="muted">
+        Traditional cybersecurity protects infrastructure. <b>Daifend protects AI systems</b>:
+        AI agents, vector databases, RAG pipelines, autonomous reasoning chains, and long-term memory.
+      </p>
+
+      <div style="margin-top:16px" class="grid cols-3">
+        <div class="panel">
+          <h3>AI Memory Trust</h3>
+          <div class="kpi">
+            <div class="v">0–100</div>
+            <div class="pill blue">trust score</div>
+          </div>
+          <p class="muted" style="margin-top:10px">
+            Quantifies integrity of persisted embeddings: drift, poisoning signals, provenance, and replay safety.
+          </p>
+        </div>
+        <div class="panel">
+          <h3>Agent Runtime Posture</h3>
+          <div class="kpi">
+            <div class="v">Live</div>
+            <div class="pill green">contained</div>
+          </div>
+          <p class="muted" style="margin-top:10px">
+            Tracks autonomy risk: permission boundaries, unsafe tool attempts, and containment effectiveness.
+          </p>
+        </div>
+        <div class="panel">
+          <h3>Threat Telemetry</h3>
+          <div class="kpi">
+            <div class="v">Signatures</div>
+            <div class="pill amber">AI-native</div>
+          </div>
+          <p class="muted" style="margin-top:10px">
+            Prompt injection, semantic corruption, agent tool misuse, model manipulation, synthetic identity.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top:18px" class="callout">
+        <h2 style="margin:0 0 6px">Positioning</h2>
+        <p class="muted" style="margin:0">
+          Daifend is not a SIEM. It is a <b>security control plane</b> for AI runtime integrity:
+          detection + policy enforcement + autonomous repair, tied together by high-fidelity telemetry.
+        </p>
+      </div>
+
+      <div class="pagebreak"></div>
+
+      <h2>Core modules and how they work</h2>
+      <div class="rule"></div>
+
+      <div class="grid cols-2">
+        <div class="panel">
+          <h3>1. AI Memory Integrity Center</h3>
+          <p class="muted">
+            Protects vector databases and long-term memory from manipulation, poisoning, and semantic drift.
+          </p>
+          <ul>
+            <li><b>Embedding trust scoring</b> per namespace with baselines, entropy checks, and signature matches.</li>
+            <li><b>Semantic drift analysis</b> across time windows to detect subtle meaning shifts.</li>
+            <li><b>Suspicious injection detection</b> for anomalous write patterns and lineage breaks.</li>
+            <li><b>Memory lineage explorer</b> from ingestion → chunking → embedding → retrieval.</li>
+            <li><b>Rollback</b> to verified baselines and quarantine suspect segments.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>2. AI Agent Security Runtime</h3>
+          <p class="muted">
+            Observes autonomous agent sessions and enforces policies around tools, permissions, and reasoning.
+          </p>
+          <ul>
+            <li><b>Runtime containment</b>: isolate sessions, rotate credentials, block unsafe execution attempts.</li>
+            <li><b>Policy enforcement</b>: risk-based tool permissions, escalation gates, and audit trails.</li>
+            <li><b>Reasoning-chain auditability</b>: correlate model outputs to tool calls and memory reads/writes.</li>
+            <li><b>Behavior fingerprinting</b>: detect session drift, abnormal communication patterns, or stealth pivots.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid cols-2" style="margin-top:14px">
+        <div class="panel">
+          <h3>3. RAG & Vector Security</h3>
+          <p class="muted">
+            Secures ingestion and retrieval paths where prompt injection and malicious documents enter.
+          </p>
+          <ul>
+            <li><b>Prompt injection detection</b> with instruction-hierarchy anomaly checks.</li>
+            <li><b>Malicious document scanning</b> (payload patterns, policy violations, disallowed instructions).</li>
+            <li><b>Retrieval chain validation</b> with signed context windows and provenance enforcement.</li>
+            <li><b>Poisoned embedding detection</b> via trust score deltas and semantic corruption signatures.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>4. AI Threat Intelligence</h3>
+          <p class="muted">
+            AI-native signature feed to detect and explain modern threats unique to AI systems.
+          </p>
+          <ul>
+            <li><b>Attack signatures</b> (prompt-borne malware, retriever bypass, spec inversion, identity spoofing).</li>
+            <li><b>Evolution tracking</b>: signature families, mutation paths, recommended mitigations.</li>
+            <li><b>Model manipulation detection</b> signals tied to runtime policy and incident correlation.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid cols-2" style="margin-top:14px">
+        <div class="panel">
+          <h3>5. Self-Healing Engine</h3>
+          <p class="muted">
+            Autonomous repair workflows that isolate the blast radius and restore trusted state.
+          </p>
+          <ul>
+            <li><b>Isolation</b>: quarantine vector segments, gate retrieval, rotate agent sessions.</li>
+            <li><b>Rollback orchestration</b> across memory snapshots and runtime sessions.</li>
+            <li><b>Trust restoration</b> with validation gates and auditable change sets.</li>
+            <li><b>Incident playback</b>: end-to-end narrative across detection → response → recovery.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>6. Cognitive Firewall</h3>
+          <p class="muted">
+            Detects persuasion and emotional manipulation vectors in AI-mediated conversations.
+          </p>
+          <ul>
+            <li><b>Persuasion analysis</b>: pressure, urgency, authority cues, and psychological steering.</li>
+            <li><b>Emotional intent</b>: identify manipulative sentiment trajectories.</li>
+            <li><b>Deepfake conversation analysis</b>: signal inconsistencies and synthetic identity patterns.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="pagebreak"></div>
+
+      <h2>Live AI Attack Simulation (investor-demo flow)</h2>
+      <div class="rule"></div>
+
+      <div class="panel">
+        <div class="grid cols-2">
+          <div>
+            <h3>Scenario</h3>
+            <p class="muted">
+              A malicious document enters ingestion, contaminates vector memory, and manipulates an agent via retrieved context.
+              Daifend detects drift + signatures, isolates corruption, heals, and generates an incident report.
+            </p>
+            <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px">
+              <span class="pill amber">prompt injection</span>
+              <span class="pill red">memory poisoning</span>
+              <span class="pill blue">drift correlation</span>
+              <span class="pill green">autonomous rollback</span>
+            </div>
+          </div>
+          <div>
+            <h3>Operational outputs</h3>
+            <ul>
+              <li><b>Trust score timeline</b> and semantic drift heatmap.</li>
+              <li><b>Threat ticker</b> with AI-native signatures and surfaces.</li>
+              <li><b>Healing actions feed</b> (isolate, rotate, rollback, invalidate, restore baseline).</li>
+              <li><b>Structured incident report</b> with evidence, actions, and recommended controls.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="margin-top:14px">
+          <h3>Step-by-step</h3>
+          <table class="table">
+            <tr><th style="width:44px">#</th><th>Event</th><th>Daifend detection</th><th>Response</th></tr>
+            <tr><td class="mono">1</td><td>Malicious document uploaded</td><td>Pre-ingestion risk scan flags hierarchy anomalies</td><td>Gate ingestion, begin deep scan</td></tr>
+            <tr><td class="mono">2</td><td>Vector DB becomes poisoned</td><td>Trust score drops, drift escalates, lineage delta spike</td><td>Quarantine suspect segment</td></tr>
+            <tr><td class="mono">3</td><td>Agent retrieves manipulated memory</td><td>Unsafe tool attempt signatures appear</td><td>Contain session, rotate agent identity</td></tr>
+            <tr><td class="mono">4</td><td>Anomaly confirmed</td><td>Signature + drift correlation crosses threshold</td><td>Escalate to incident</td></tr>
+            <tr><td class="mono">5</td><td>Runtime isolation</td><td>Control plane enforces retrieval chain constraints</td><td>Freeze writes, block risky tools</td></tr>
+            <tr><td class="mono">6</td><td>Self-healing restores integrity</td><td>Validation gates pass against trusted baseline</td><td>Rollback + invalidate embeddings</td></tr>
+            <tr><td class="mono">7</td><td>Incident report generated</td><td>Evidence assembled with provenance</td><td>Export to SOC / ticketing</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="pagebreak"></div>
+
+      <h2>Architecture: where Daifend sits</h2>
+      <div class="rule"></div>
+
+      <div class="grid cols-2">
+        <div class="panel">
+          <h3>Control plane</h3>
+          <p class="muted">
+            Daifend runs alongside AI infrastructure as a policy + telemetry + response layer.
+          </p>
+          <ul>
+            <li><b>Agents</b>: permissions, tool calls, reasoning traces, containment.</li>
+            <li><b>RAG</b>: ingestion scanning, retriever validation, context provenance.</li>
+            <li><b>Vector memory</b>: trust scoring, lineage, drift, rollback.</li>
+            <li><b>Threat intel</b>: signatures and evolving attack families.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Integrations (mock)</h3>
+          <ul>
+            <li><span class="pill blue">OpenAI</span> <span class="pill">Azure OpenAI</span> <span class="pill">Bedrock</span> <span class="pill">Anthropic</span></li>
+            <li><span class="pill">Pinecone</span> <span class="pill">Weaviate</span> <span class="pill">LangChain</span></li>
+            <li><span class="pill">Kubernetes</span> <span class="pill">CrowdStrike</span> <span class="pill">Microsoft Sentinel</span></li>
+          </ul>
+          <p class="muted" style="margin-top:10px">
+            Outputs: incidents, alerts, reports, and integrity metrics for SOC visibility without becoming a generic SIEM UI.
+          </p>
+        </div>
+      </div>
+
+      <div class="foot">
+        Daifend — AI Security Infrastructure • Internal brief • Generated from the Daifend platform prototype
+      </div>
+    </main>
+  </body>
+</html>
+

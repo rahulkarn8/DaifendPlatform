@@ -1,0 +1,20 @@
+{
+  "name": "daifend-platform",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@daifend/web",
+    "build": "npm run build --workspace=@daifend/web",
+    "lint": "npm run lint --workspaces --if-present",
+    "telemetry:demo": "npm run telemetry --workspace=@daifend/web",
+    "compose:up": "docker compose up -d",
+    "compose:down": "docker compose down"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

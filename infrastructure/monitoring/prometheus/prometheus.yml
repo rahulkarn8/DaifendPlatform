@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: daifend-api-gateway
+    metrics_path: /health
+    static_configs:
+      - targets: ["api-gateway:8080"]
+  - job_name: daifend-telemetry
+    metrics_path: /health
+    static_configs:
+      - targets: ["telemetry-service:4001"]

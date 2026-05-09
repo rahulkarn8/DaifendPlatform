@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: daifend-env
+  namespace: daifend
+data:
+  NATS_URL: "nats://nats.daifend.svc.cluster.local:4222"
+  MEMORY_INTEGRITY_URL: "http://memory-integrity-engine.daifend.svc.cluster.local:8003"
+  AGENT_RUNTIME_URL: "http://agent-runtime-engine.daifend.svc.cluster.local:8004"
+  THREAT_ENGINE_URL: "http://threat-engine.daifend.svc.cluster.local:8002"
+  SELF_HEALING_URL: "http://self-healing-engine.daifend.svc.cluster.local:8005"
+  NOTIFICATION_URL: "http://notification-service.daifend.svc.cluster.local:8006"
+  AUTH_SERVICE_URL: "http://auth-service.daifend.svc.cluster.local:8001"

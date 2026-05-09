@@ -1,0 +1,18 @@
+<!-- DAIFEND FAVICON SVG -->
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="128" height="128" rx="24" fill="black"/>
+
+  <!-- D Shape -->
+  <path d="M28 20V108" stroke="#F5F7FA" stroke-width="8" stroke-linecap="round"/>
+  <path d="M28 20C78 20 98 42 98 64C98 86 78 108 28 108"
+        stroke="#F5F7FA"
+        stroke-width="8"
+        stroke-linecap="round"/>
+
+  <!-- Inner semantic node -->
+  <rect x="50" y="56" width="12" height="12" rx="2" fill="#9FB4FF"/>
+
+  <!-- Minimal cut -->
+  <line x1="98" y1="64" x2="82" y2="64" stroke="black" stroke-width="8"/>
+</svg>
+
