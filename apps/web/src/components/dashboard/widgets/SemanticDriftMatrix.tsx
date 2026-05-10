@@ -23,15 +23,18 @@ export function SemanticDriftMatrix({
     const rows = 8;
     const cols = 18;
     const base = Math.max(0, Math.min(1, drift));
+    const cell = (r: number, c: number) => {
+      const wave = Math.sin((c / cols) * Math.PI * 2 + r * 0.7) * 0.08;
+      const salt = poisoned * 0.01 + drift;
+      const pseudo =
+        Math.sin(r * 12.9898 + c * 78.233 + salt * 43.758) * 43758.5453;
+      const noise = (pseudo - Math.floor(pseudo) - 0.5) * 0.08;
+      return Math.max(0, Math.min(1, base + wave + noise));
+    };
     return Array.from({ length: rows }, (_, r) =>
-      Array.from({ length: cols }, (_, c) => {
-        const wave = Math.sin((c / cols) * Math.PI * 2 + r * 0.7) * 0.08;
-        const noise = (Math.random() - 0.5) * 0.08;
-        const v = Math.max(0, Math.min(1, base + wave + noise));
-        return v;
-      }),
+      Array.from({ length: cols }, (_, c) => cell(r, c)),
     );
-  }, [drift, poisoned]); // poisoned intentionally influences re-render cadence
+  }, [drift, poisoned]);
 
   const posture =
     drift < 0.12 ? "stable" : drift < 0.22 ? "watch" : drift < 0.33 ? "degrading" : "corrupted";

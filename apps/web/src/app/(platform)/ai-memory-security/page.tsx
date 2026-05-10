@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrustTimeline } from "@/components/dashboard/widgets/TrustTimeline";
 import { SemanticDriftMatrix } from "@/components/dashboard/widgets/SemanticDriftMatrix";
+import { MemoryIntegrityClient } from "./MemoryIntegrityClient";
 
 export default function AiMemorySecurityPage() {
   return (
@@ -17,6 +18,8 @@ export default function AiMemorySecurityPage() {
           </Badge>
         }
       />
+
+      <MemoryIntegrityClient />
 
       <div className="grid gap-4 md:grid-cols-12">
         <div className="md:col-span-8">

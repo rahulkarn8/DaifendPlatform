@@ -131,6 +131,8 @@ async def _proxy(
     body = await request.body()
     headers = _upstream_headers(request, str(tenant))
     url = f"{base.rstrip('/')}{path}"
+    if request.url.query:
+        url = f"{url}?{request.url.query}"
     kw = httpx_async_client_kwargs(timeout=30.0)
     async with httpx.AsyncClient(**kw) as client:
         r = await client.request(
@@ -190,6 +192,44 @@ async def memory_analyze(request: Request, _c: dict = Depends(_verify_jwt)):
             logger.exception("gRPC memory analyze failed")
             raise HTTPException(status_code=502, detail="memory_grpc_error") from exc
     return await _proxy(request, SERVICES["memory"], "/v1/analyze", _c)
+
+
+@app.post("/v1/memory-integrity/scan/start")
+@limiter.limit("60/minute")
+async def memory_scan_start(request: Request, _c: dict = Depends(_verify_jwt)):
+    return await _proxy(request, SERVICES["memory"], "/v1/scan/start", _c)
+
+
+@app.get("/v1/memory-integrity/scan/{scan_id}/status")
+@limiter.limit("120/minute")
+async def memory_scan_status(request: Request, scan_id: str, _c: dict = Depends(_verify_jwt)):
+    return await _proxy(
+        request, SERVICES["memory"], f"/v1/scan/{scan_id}/status", _c
+    )
+
+
+@app.get("/v1/memory-integrity/reports")
+@limiter.limit("120/minute")
+async def memory_reports_route(request: Request, _c: dict = Depends(_verify_jwt)):
+    return await _proxy(request, SERVICES["memory"], "/v1/memory/reports", _c)
+
+
+@app.get("/v1/memory-integrity/feed")
+@limiter.limit("120/minute")
+async def memory_feed_route(request: Request, _c: dict = Depends(_verify_jwt)):
+    return await _proxy(request, SERVICES["memory"], "/v1/memory/feed", _c)
+
+
+@app.get("/v1/memory-integrity/incidents")
+@limiter.limit("120/minute")
+async def memory_incidents_route(request: Request, _c: dict = Depends(_verify_jwt)):
+    return await _proxy(request, SERVICES["memory"], "/v1/incidents/list", _c)
+
+
+@app.post("/v1/memory-integrity/rollback/initiate")
+@limiter.limit("30/minute")
+async def memory_rollback_route(request: Request, _c: dict = Depends(_verify_jwt)):
+    return await _proxy(request, SERVICES["memory"], "/v1/rollback/initiate", _c)
 
 
 @app.post("/v1/agent-runtime/validate-action")

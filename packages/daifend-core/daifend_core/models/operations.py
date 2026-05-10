@@ -1,4 +1,4 @@
-from sqlalchemy import String, Text, DateTime, Float, JSON
+from sqlalchemy import String, Text, DateTime, Float, JSON, Boolean, ForeignKey, Integer
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql import func
 from datetime import datetime
@@ -36,6 +36,39 @@ class Incident(Base, TimestampMixin):
     title: Mapped[str] = mapped_column(String(512), nullable=False)
     status: Mapped[str] = mapped_column(String(32), default="open")
     severity: Mapped[str] = mapped_column(String(16), default="medium")
+    category: Mapped[str | None] = mapped_column(String(64), index=True)
+    detail: Mapped[dict | None] = mapped_column(JSON)
+
+
+class VectorSource(Base, TimestampMixin):
+    """Registered vector store target per tenant (Qdrant collection, Pinecone index, etc.)."""
+
+    __tablename__ = "vector_sources"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    backend: Mapped[str] = mapped_column(String(32), nullable=False, index=True)
+    collection_ref: Mapped[str] = mapped_column(String(512), nullable=False)
+    config: Mapped[dict | None] = mapped_column(JSON)
+    source_reputation: Mapped[float] = mapped_column(Float, default=1.0)
+
+
+class MemorySnapshot(Base, TimestampMixin):
+    """Baseline embedding centroid + fingerprint for drift comparison."""
+
+    __tablename__ = "memory_snapshots"
+
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
+    tenant_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
+    vector_source_id: Mapped[str | None] = mapped_column(
+        String(36), ForeignKey("vector_sources.id"), index=True
+    )
+    collection_id: Mapped[str | None] = mapped_column(String(128), index=True)
+    centroid: Mapped[list] = mapped_column(JSON, nullable=False)
+    fingerprint: Mapped[str] = mapped_column(String(128), nullable=False)
+    point_count: Mapped[int] = mapped_column(Integer, default=0)
+    scan_id: Mapped[str | None] = mapped_column(String(64), index=True)
 
 
 class MemoryIntegrityReport(Base, TimestampMixin):
@@ -44,9 +77,13 @@ class MemoryIntegrityReport(Base, TimestampMixin):
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=_uuid)
     tenant_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
     collection_id: Mapped[str | None] = mapped_column(String(128))
+    scan_id: Mapped[str | None] = mapped_column(String(64), index=True)
     trust_score: Mapped[float] = mapped_column(Float, nullable=False)
+    integrity_score: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
+    poisoning_probability: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
     semantic_drift: Mapped[float] = mapped_column(Float, nullable=False)
     fingerprint: Mapped[str] = mapped_column(String(128), nullable=False)
+    vector_backend: Mapped[str | None] = mapped_column(String(32))
     detail: Mapped[dict] = mapped_column(JSON, nullable=False)
 
 
@@ -59,6 +96,9 @@ class VectorMetadata(Base, TimestampMixin):
     point_id: Mapped[str] = mapped_column(String(128), nullable=False)
     trust_weight: Mapped[float] = mapped_column(Float, default=1.0)
     labels: Mapped[dict | None] = mapped_column(JSON)
+    connector_type: Mapped[str | None] = mapped_column(String(32))
+    namespace: Mapped[str | None] = mapped_column(String(256))
+    quarantined: Mapped[bool] = mapped_column(Boolean, default=False, index=True)
 
 
 class AuditLog(Base, TimestampMixin):

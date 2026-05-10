@@ -45,12 +45,15 @@ def analyze_via_grpc(body: dict[str, Any]) -> dict[str, Any]:
         ]
         return {
             "trustScore": resp.trust_score,
+            "integrityScore": resp.integrity_score,
+            "poisoningProbability": resp.poisoning_probability,
             "semanticDrift": resp.semantic_drift,
             "poisonedClusterRisk": resp.poisoned_cluster_risk,
             "anomalousIndices": list(resp.anomalous_indices),
             "promptInjectionSignals": signals,
             "fingerprint": resp.fingerprint,
             "recommendedActions": list(resp.recommended_actions),
+            "centroid": list(resp.centroid),
         }
     finally:
         channel.close()

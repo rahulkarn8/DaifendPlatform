@@ -35,4 +35,7 @@ message AnalyzeResponse {
   string fingerprint = 5;
   repeated string recommended_actions = 6;
   repeated PromptInjectionSignal prompt_injection_signals = 7;
+  double integrity_score = 8;
+  double poisoning_probability = 9;
+  repeated float centroid = 10;
 }

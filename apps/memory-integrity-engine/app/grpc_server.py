@@ -37,7 +37,11 @@ class MemoryIntegrityServicer(memory_pb2_grpc.MemoryIntegrityServicer):
                 anomalous_indices=r["anomalousIndices"],
                 fingerprint=r["fingerprint"],
                 recommended_actions=r["recommendedActions"],
+                integrity_score=float(r.get("integrityScore", r["trustScore"])),
+                poisoning_probability=float(r.get("poisoningProbability", 0)),
             )
+            if r.get("centroid"):
+                resp.centroid.extend(float(x) for x in r["centroid"])
             for sig in r.get("promptInjectionSignals", []):
                 p = resp.prompt_injection_signals.add()
                 p.sample_index = int(sig.get("sampleIndex", 0))
