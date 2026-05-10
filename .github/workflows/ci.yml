@@ -72,7 +72,7 @@ jobs:
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
       - name: Generate CycloneDX SBOM
         run: syft dir:. -o cyclonedx-json=sbom.cdx.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: cyclonedx-sbom
           path: sbom.cdx.json
