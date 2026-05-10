@@ -12,6 +12,6 @@
     "@daifend/types": "*"
   },
   "devDependencies": {
-    "typescript": "^5"
+    "typescript": "^6"
   }
 }
