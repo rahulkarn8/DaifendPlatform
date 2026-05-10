@@ -1,13 +1,14 @@
 """
-Telemetry ingress: NATS (optional) + Socket.IO fan-out for the Daifend web console.
+Telemetry ingress: enterprise NATS → Socket.IO + durable sinks, or demo mode (local only).
 
-Demo mode (no NATS): generates the same event families as the legacy Node mock server.
+Production (DAIFEND_ENV=production or TELEMETRY_INGEST_MODE=enterprise): no synthetic RNG telemetry.
 """
 
 from __future__ import annotations
 
 import asyncio
 import json
+import logging
 import os
 import random
 from typing import Any
@@ -16,8 +17,12 @@ import socketio
 from fastapi import FastAPI
 from nats.aio.client import Client as NATS
 
+from app.ingest_config import ingest_mode
+from app.nats_enterprise import enterprise_nats_loop
 from app.sinks import sink_telemetry_batch
 from daifend_core.observability import instrument_fastapi
+
+logger = logging.getLogger(__name__)
 
 NATS_URL = os.environ.get("NATS_URL", "nats://127.0.0.1:4222")
 PORT = int(os.environ.get("TELEMETRY_PORT", "4001"))
@@ -26,7 +31,7 @@ ORIGINS = os.environ.get(
     "http://127.0.0.1:3000,http://localhost:3000",
 ).split(",")
 
-fastapi_app = FastAPI(title="Daifend Telemetry Service", version="0.2.0")
+fastapi_app = FastAPI(title="Daifend Telemetry Service", version="0.3.0")
 sio = socketio.AsyncServer(
     async_mode="asgi",
     cors_allowed_origins=ORIGINS,
@@ -34,6 +39,7 @@ sio = socketio.AsyncServer(
 )
 app = socketio.ASGIApp(sio, other_asgi_app=fastapi_app)
 
+# Demo-mode state (TELEMETRY_INGEST_MODE=demo only)
 memory_trust = 93.6
 drift = 0.08
 poisoned = 0
@@ -54,6 +60,7 @@ def _pick(xs: list[Any]) -> Any:
 
 
 def _build_batch_sync() -> list[dict[str, Any]]:
+    """Synthetic batch — ONLY for explicit demo ingest mode (local sandbox)."""
     global memory_trust, drift, poisoned, rag_integrity, active_agents
     import time
 
@@ -68,23 +75,29 @@ def _build_batch_sync() -> list[dict[str, Any]]:
         {
             "type": "memory.trust",
             "ts": ts,
+            "tenantId": os.environ.get("DEFAULT_TENANT_ID", "default"),
             "trustScore": round(memory_trust, 2),
             "driftScore": round(drift, 3),
             "poisonedVectors": poisoned,
+            "source": "demo",
         },
         {
             "type": "rag.integrity",
             "ts": ts,
+            "tenantId": os.environ.get("DEFAULT_TENANT_ID", "default"),
             "integrityScore": round(rag_integrity, 2),
             "injectionAttempts": int(_clamp(_jitter(2, 2), 0, 22)),
             "maliciousDocsQuarantined": int(_clamp(_jitter(1, 1), 0, 10)),
+            "source": "demo",
         },
         {
             "type": "agent.runtime",
             "ts": ts,
+            "tenantId": os.environ.get("DEFAULT_TENANT_ID", "default"),
             "activeAgents": active_agents,
             "unsafeToolAttempts": int(_clamp(_jitter(1, 2), 0, 28)),
             "containmentActions": int(_clamp(_jitter(1, 1.5), 0, 10)),
+            "source": "demo",
         },
     ]
     if random.random() < 0.42:
@@ -92,6 +105,7 @@ def _build_batch_sync() -> list[dict[str, Any]]:
             {
                 "type": "threat.attempt",
                 "ts": ts,
+                "tenantId": os.environ.get("DEFAULT_TENANT_ID", "default"),
                 "signature": _pick(
                     [
                         "PromptInjection:ContextOverride",
@@ -102,6 +116,7 @@ def _build_batch_sync() -> list[dict[str, Any]]:
                 ),
                 "severity": _pick(["low", "medium", "high", "critical"]),
                 "surface": _pick(["rag", "memory", "agent", "model", "identity"]),
+                "source": "demo",
             }
         )
     return batch
@@ -110,21 +125,41 @@ def _build_batch_sync() -> list[dict[str, Any]]:
 _tick_started = False
 
 
+def _ensure_ingest_loop() -> None:
+    global _tick_started
+    if _tick_started:
+        return
+    _tick_started = True
+    mode = ingest_mode()
+    if mode == "enterprise":
+        logger.info("telemetry ingest=enterprise (NATS-only, no synthetic batches)")
+        sio.start_background_task(enterprise_nats_loop, sio, NATS_URL, sink_telemetry_batch)
+    else:
+        logger.warning(
+            "telemetry ingest=demo — synthetic batches enabled; NOT for production"
+        )
+        sio.start_background_task(tick_loop)
+
+
 @fastapi_app.get("/health")
 def health():
-    global _tick_started
-    if not _tick_started:
-        _tick_started = True
-        sio.start_background_task(tick_loop)
-    return {"service": "telemetry-service", "status": "ok"}
+    _ensure_ingest_loop()
+    return {
+        "service": "telemetry-service",
+        "status": "ok",
+        "ingestMode": ingest_mode(),
+    }
+
+
+@fastapi_app.get("/ready")
+def ready():
+    """Readiness: process up; NATS connectivity is best-effort with reconnect."""
+    return {"ready": True, "ingestMode": ingest_mode()}
 
 
 @sio.event
 async def connect(sid, environ):
-    global _tick_started
-    if not _tick_started:
-        _tick_started = True
-        sio.start_background_task(tick_loop)
+    _ensure_ingest_loop()
 
     import time
 
@@ -133,7 +168,7 @@ async def connect(sid, environ):
         {
             "serverTime": int(time.time() * 1000),
             "streams": ["telemetry:batch"],
-            "mode": "live",
+            "mode": ingest_mode(),
         },
         room=sid,
     )
@@ -141,6 +176,13 @@ async def connect(sid, environ):
 
 @sio.on("simulation:spike")
 async def simulation_spike(sid, data):  # type: ignore[misc]
+    if ingest_mode() == "enterprise":
+        await sio.emit(
+            "telemetry:error",
+            {"message": "simulation disabled in enterprise ingest mode"},
+            room=sid,
+        )
+        return
     global drift, poisoned, memory_trust, rag_integrity
     intensity = float((data or {}).get("intensity") or 0.7)
     k = _clamp(intensity, 0, 1)
@@ -154,9 +196,11 @@ async def simulation_spike(sid, data):  # type: ignore[misc]
         {
             "type": "healing.action",
             "ts": int(time.time() * 1000),
+            "tenantId": os.environ.get("DEFAULT_TENANT_ID", "default"),
             "action": "isolate_vector_segment",
             "incidentId": f"INC-{str(int(time.time()))[-6:]}",
             "progress": 0.12,
+            "source": "demo",
         }
     ]
     await sio.emit("telemetry:batch", spike_batch)
@@ -167,6 +211,9 @@ async def simulation_spike(sid, data):  # type: ignore[misc]
 
 
 async def tick_loop():
+    """Demo-only periodic publisher + optional NATS mirror."""
+    if ingest_mode() == "enterprise":
+        return
     nc: NATS | None = None
     try:
         nc = NATS()
@@ -174,7 +221,7 @@ async def tick_loop():
     except Exception:
         nc = None
 
-    while True:
+    while ingest_mode() == "demo":
         batch = _build_batch_sync()
         await sio.emit("telemetry:batch", batch)
         if nc and nc.is_connected:

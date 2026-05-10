@@ -1,5 +1,6 @@
 from .base import Base, TimestampMixin
 from .tenant import Organization, Tenant, User, Role, ApiKey
+from .enterprise import SecurityPolicy, TenantQuota
 from .operations import (
     TelemetryEventRecord,
     ThreatIntelRecord,
@@ -29,4 +30,6 @@ __all__ = [
     "VectorMetadata",
     "AuditLog",
     "AgentRegistryEntry",
+    "TenantQuota",
+    "SecurityPolicy",
 ]

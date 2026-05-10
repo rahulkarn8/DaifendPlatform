@@ -16,11 +16,44 @@ telemetry:
   replicas: 2
   service:
     port: 4001
+  ingestMode: enterprise
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      memory: 512Mi
+
+memoryIntegrity:
+  image: daifend/memory-integrity-engine
+  tag: latest
+  replicas: 2
+  service:
+    httpPort: 8003
+    grpcPort: 50051
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      memory: 4Gi
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 12
+    targetCPUUtilizationPercentage: 70
+
+podSecurity:
+  networkPolicy: true
 
 env:
   natsUrl: nats://nats:4222
   corsOrigins: "http://127.0.0.1:3000"
+  databaseUrl: postgresql+psycopg://daifend:daifend@postgres:5432/daifend
+  clickhouseUrl: http://clickhouse:8123
+  qdrantUrl: http://qdrant:6333
 
 secrets:
   jwtSecret: ""
   internalToken: ""
+  refreshTokenSecret: ""

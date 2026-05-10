@@ -1,0 +1,11 @@
+{{- if .Values.memoryIntegrity }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "daifend.name" . }}-memory-integrity
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: memory-integrity-engine
+{{- end }}

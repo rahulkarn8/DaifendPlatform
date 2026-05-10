@@ -9,7 +9,7 @@ Enterprise AI security infrastructure: **memory integrity**, **agent runtime pol
 | `apps/web` | Next.js 16 UI (dashboard, modules, simulation) |
 | `apps/api-gateway` | FastAPI edge: auth, rate limits, tenant routing, service proxy |
 | `apps/auth-service` | OAuth2-style tokens + introspection (OIDC-ready) |
-| `apps/telemetry-service` | Socket.IO fan-out + NATS publish (`daifend.telemetry.raw`) |
+| `apps/telemetry-service` | Socket.IO fan-out; **enterprise** = NATS-only ingest (no synthetic telemetry) |
 | `apps/memory-integrity-engine` | **Real** numpy semantic drift / anomaly / injection heuristics |
 | `apps/agent-runtime-engine` | Tool allowlists + argument / reasoning safety |
 | `apps/threat-engine` | RAG document scan + threat correlation API |
@@ -42,6 +42,10 @@ docker compose up -d --build
 ## Documentation
 
 - **PDF:** [Platform guide — features & how to use](docs/Daifend-Platform-Guide.pdf) (regenerate: `npm run docs:pdf --workspace=@daifend/web`)
+- [Enterprise architecture](docs/ENTERPRISE-ARCHITECTURE.md) — multi-tenant, streaming, deployment modes, boundaries
+- [Runbook](docs/RUNBOOK.md) — health, migrations, telemetry modes, failure modes
+- [Onboarding](docs/ONBOARDING.md) — engineer setup, auth, K8s
+- [API contracts (v1)](docs/API-CONTRACTS.md) — gateway, auth, telemetry, gRPC index
 - [Architecture](docs/ARCHITECTURE.md) — system diagram, data flow, demo vs production
 - [Hardening](docs/HARDENING.md) — OTel, Redis limits, OIDC, ClickHouse, Kafka, Qdrant, gRPC path
 - [Phase 3](docs/PHASE3.md) — service token gate, mTLS hooks, gRPC memory, OPA, Prisma
@@ -51,7 +55,7 @@ docker compose up -d --build
 
 ## CI
 
-GitHub Actions runs ESLint on the web app and `pytest` on the memory integrity engine.
+GitHub Actions runs web lint/build, memory-engine `pytest`, Bandit (Python security), and Trivy filesystem scanning.
 
 ## License
 

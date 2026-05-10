@@ -82,6 +82,22 @@ async def sink_telemetry_batch(
     batch: list[dict[str, Any]],
     tenant_id: str | None = None,
 ) -> None:
-    tid = tenant_id or DEFAULT_TENANT_ID
-    await _clickhouse_insert(batch, tid)
-    await _kafka_send(batch, tid)
+    """Route each event by its tenantId (required in enterprise); fallback only when absent."""
+    from collections import defaultdict
+
+    by_tenant: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for ev in batch:
+        if not isinstance(ev, dict):
+            continue
+        tid = (
+            ev.get("tenantId")
+            or ev.get("tenant_id")
+            or tenant_id
+            or DEFAULT_TENANT_ID
+        )
+        by_tenant[str(tid)].append(ev)
+    if not by_tenant:
+        return
+    for tid, evs in by_tenant.items():
+        await _clickhouse_insert(evs, tid)
+        await _kafka_send(evs, tid)

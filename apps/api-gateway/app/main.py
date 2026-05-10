@@ -62,12 +62,29 @@ instrument_httpx()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=os.environ.get(
-        "CORS_ORIGINS", "http://127.0.0.1:3000,http://localhost:3000"
+        "CORS_ORIGINS",
+        "http://127.0.0.1:3000,http://localhost:3000,http://127.0.0.1:3002,http://localhost:3002",
     ).split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def security_headers_middleware(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["Permissions-Policy"] = (
+        "accelerometer=(), camera=(), geolocation=(), microphone=(), payment=()"
+    )
+    if os.environ.get("GATEWAY_ENABLE_HSTS", "").lower() in ("1", "true", "yes"):
+        response.headers["Strict-Transport-Security"] = (
+            "max-age=31536000; includeSubDomains; preload"
+        )
+    return response
 
 
 def _decode_bearer(token: str) -> dict[str, Any]:
@@ -127,6 +144,16 @@ async def _proxy(
     tenant = request.headers.get("x-tenant-id") or claims.get("tenant_id")
     if not tenant:
         raise HTTPException(status_code=400, detail="tenant required")
+
+    claim_tid = claims.get("tenant_id")
+    hdr_tid = request.headers.get("x-tenant-id")
+    if (
+        claim_tid
+        and hdr_tid
+        and str(claim_tid) != str(hdr_tid)
+        and claims.get("sub") != "internal"
+    ):
+        raise HTTPException(status_code=403, detail="tenant_header_mismatch_jwt")
 
     body = await request.body()
     headers = _upstream_headers(request, str(tenant))

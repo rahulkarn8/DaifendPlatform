@@ -1,0 +1,10 @@
+# Production-oriented overlay — patch replicas, resources, and image tags per environment.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../base
+namespace: daifend
+commonLabels:
+  environment: production
+patches:
+  - path: patches/api-gateway-replicas.yaml

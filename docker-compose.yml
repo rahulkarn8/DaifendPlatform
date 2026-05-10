@@ -157,8 +157,11 @@ services:
     environment:
       ENGINE_REQUIRE_INTERNAL_TOKEN: "true"
       INTERNAL_SERVICE_TOKEN: dev-internal-token
+      MEMORY_INTEGRITY_URL: http://memory-integrity-engine:8003
     ports:
       - "8005:8005"
+    depends_on:
+      - memory-integrity-engine
 
   notification-service:
     build:
@@ -175,6 +178,8 @@ services:
       context: .
       dockerfile: apps/telemetry-service/Dockerfile
     environment:
+      DAIFEND_ENV: development
+      TELEMETRY_INGEST_MODE: demo
       NATS_URL: nats://nats:4222
       TELEMETRY_ORIGINS: http://127.0.0.1:3000,http://localhost:3000
       CLICKHOUSE_HTTP_URL: http://clickhouse:8123

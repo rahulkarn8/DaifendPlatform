@@ -1,0 +1,66 @@
+{{- if .Values.memoryIntegrity }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "daifend.name" . }}-memory-integrity
+spec:
+  replicas: {{ .Values.memoryIntegrity.replicas }}
+  selector:
+    matchLabels:
+      app: memory-integrity-engine
+  template:
+    metadata:
+      labels:
+        app: memory-integrity-engine
+    spec:
+      containers:
+        - name: memory-integrity
+          image: "{{ .Values.memoryIntegrity.image }}:{{ .Values.memoryIntegrity.tag }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.memoryIntegrity.service.httpPort }}
+            - name: grpc
+              containerPort: {{ .Values.memoryIntegrity.service.grpcPort }}
+          env:
+            - name: QDRANT_URL
+              value: {{ .Values.env.qdrantUrl | quote }}
+            - name: DATABASE_URL
+              value: {{ .Values.env.databaseUrl | quote }}
+            - name: NATS_URL
+              value: {{ .Values.env.natsUrl | quote }}
+            - name: CLICKHOUSE_HTTP_URL
+              value: {{ .Values.env.clickhouseUrl | quote }}
+            - name: INTERNAL_SERVICE_TOKEN
+              value: {{ .Values.secrets.internalToken | default "dev-only" | quote }}
+            - name: ENGINE_REQUIRE_INTERNAL_TOKEN
+              value: "true"
+          resources:
+            {{- toYaml .Values.memoryIntegrity.resources | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "daifend.name" . }}-memory-integrity
+spec:
+  selector:
+    app: memory-integrity-engine
+  ports:
+    - name: http
+      port: {{ .Values.memoryIntegrity.service.httpPort }}
+      targetPort: http
+    - name: grpc
+      port: {{ .Values.memoryIntegrity.service.grpcPort }}
+      targetPort: grpc
+{{- end }}
