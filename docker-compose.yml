@@ -98,12 +98,20 @@ services:
 
   auth-service:
     build:
-      context: ./apps/auth-service
+      context: .
+      dockerfile: apps/auth-service/Dockerfile
     environment:
       JWT_SECRET: dev-secret-change-in-production
       DAIFEND_ENV: development
+      DATABASE_URL: postgresql+psycopg://daifend:daifend@postgres:5432/daifend
+      REDIS_URL: redis://redis:6379/1
     ports:
       - "8001:8001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
 
   threat-engine:
     build:
@@ -203,6 +211,8 @@ services:
       INTERNAL_SERVICE_TOKEN: dev-internal-token
       GATEWAY_SEND_INTERNAL_TOKEN: "true"
       REDIS_URL: redis://redis:6379/0
+      DATABASE_URL: postgresql+psycopg://daifend:daifend@postgres:5432/daifend
+      OPA_URL: http://opa:8181
       AUTH_SERVICE_URL: http://auth-service:8001
       MEMORY_INTEGRITY_URL: http://memory-integrity-engine:8003
       MEMORY_GRPC_TARGET: memory-integrity-engine:50051
@@ -217,6 +227,8 @@ services:
     depends_on:
       - redis
       - jaeger
+      - opa
+      - postgres
       - auth-service
       - memory-integrity-engine
       - agent-runtime-engine

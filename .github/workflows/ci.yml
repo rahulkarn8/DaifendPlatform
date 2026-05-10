@@ -61,3 +61,18 @@ jobs:
           scan-ref: .
           severity: CRITICAL,HIGH
           exit-code: "0"
+
+  sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Syft
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+      - name: Generate CycloneDX SBOM
+        run: syft dir:. -o cyclonedx-json=sbom.cdx.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cyclonedx-sbom
+          path: sbom.cdx.json

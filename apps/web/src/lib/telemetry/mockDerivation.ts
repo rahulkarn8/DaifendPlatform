@@ -23,6 +23,7 @@ export function deriveFromBatch(
   for (const evt of batch) {
     switch (evt.type) {
       case "memory.trust":
+      case "memory.integrity.report":
         next.memoryTrustScore = evt.trustScore;
         next.semanticDriftScore = evt.driftScore;
         next.poisonedVectors = evt.poisonedVectors;

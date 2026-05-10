@@ -25,7 +25,7 @@ class ThreatIntelRecord(Base, TimestampMixin):
     signature: Mapped[str] = mapped_column(String(512), nullable=False)
     severity: Mapped[str] = mapped_column(String(16), nullable=False)
     surface: Mapped[str] = mapped_column(String(32), nullable=False)
-    metadata: Mapped[dict | None] = mapped_column(JSON)
+    intel_metadata: Mapped[dict | None] = mapped_column("metadata", JSON)
 
 
 class Incident(Base, TimestampMixin):

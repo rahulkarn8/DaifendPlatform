@@ -22,7 +22,7 @@
         margin:0;
         background: var(--bg);
         color: var(--text);
-        font: 13px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Helvetica, Arial, sans-serif;
+        font: 12.5px/1.52 ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif;
         letter-spacing: .01em;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
@@ -30,8 +30,8 @@
           radial-gradient(1200px 600px at 70% -10%, rgba(159,180,255,.09), transparent 60%),
           radial-gradient(900px 500px at 10% 0%, rgba(93,214,161,.06), transparent 55%);
       }
-      .doc{max-width:980px;margin:0 auto;padding:48px 48px 64px}
-      .rule{height:1px;background:var(--border);margin:16px 0 18px}
+      .doc{max-width:980px;margin:0 auto;padding:40px 44px 56px}
+      .rule{height:1px;background:var(--border);margin:14px 0 16px}
       .pill{
         display:inline-flex;align-items:center;gap:8px;
         padding:6px 10px;border-radius:999px;border:1px solid var(--border);
@@ -40,48 +40,48 @@
       }
       .pill.blue{border-color:rgba(159,180,255,.22);background:rgba(159,180,255,.10);color:rgba(245,247,250,.92)}
       .pill.green{border-color:rgba(93,214,161,.22);background:rgba(93,214,161,.10);color:rgba(245,247,250,.92)}
-      .pill.amber{border-color:rgba(244,178,74,.22);background:rgba(244,178,74,.10);color:rgba(245,247,250,.92)}
-      h1{font-size:28px;line-height:1.15;letter-spacing:-.03em;margin:12px 0 8px}
-      h2{font-size:16px;letter-spacing:-.02em;margin:0 0 8px}
-      h3{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
-      p{margin:0 0 8px;color:rgba(245,247,250,.92)}
+      h1{font-size:26px;line-height:1.15;letter-spacing:-.03em;margin:10px 0 6px}
+      h2{font-size:15px;letter-spacing:-.02em;margin:18px 0 6px}
+      h3{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+      p{margin:0 0 7px;color:rgba(245,247,250,.92)}
       .muted{color:var(--muted)}
-      .grid{display:grid;gap:12px}
+      .grid{display:grid;gap:11px}
       .cols-2{grid-template-columns:1fr 1fr}
       .panel{
         border:1px solid var(--border);
         background:rgba(14,17,23,.72);
-        border-radius:16px;
-        padding:14px 14px 12px;
-        box-shadow:0 0 0 1px rgba(255,255,255,.03), 0 40px 100px -100px rgba(159,180,255,.3);
+        border-radius:14px;
+        padding:12px 12px 10px;
+        box-shadow:0 0 0 1px rgba(255,255,255,.03), 0 40px 100px -100px rgba(159,180,255,.25);
       }
-      ul{margin:8px 0 0;padding:0 0 0 16px;color:var(--muted);font-size:12px}
-      li{margin:4px 0}
-      .logo{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+      ul{margin:6px 0 0;padding:0 0 0 15px;color:var(--muted);font-size:11.5px}
+      li{margin:3px 0}
+      .logo{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
       .logo svg{display:block}
       .logo .tag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:rgba(160,174,192,.9)}
       pre.cmd{
-        margin:8px 0 0;
-        padding:10px 12px;
-        border-radius:12px;
+        margin:6px 0 0;
+        padding:9px 11px;
+        border-radius:10px;
         border:1px solid var(--border);
         background:rgba(0,0,0,.35);
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        font-size:11px;
-        line-height:1.45;
+        font-size:10.5px;
+        line-height:1.42;
         color:rgba(245,247,250,.9);
         white-space:pre-wrap;
         word-break:break-all;
       }
-      .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;font-size:11px}
-      .table{width:100%;border-collapse:separate;border-spacing:0;font-size:11px}
-      .table th,.table td{border-top:1px solid var(--border);padding:8px 8px;text-align:left;vertical-align:top}
-      .table th{color:var(--muted);font-weight:600;width:28%}
+      .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;font-size:10.5px}
+      .table{width:100%;border-collapse:separate;border-spacing:0;font-size:10.5px}
+      .table th,.table td{border-top:1px solid var(--border);padding:6px 7px;text-align:left;vertical-align:top}
+      .table th{color:var(--muted);font-weight:600;width:26%}
       .table tr:first-child th,.table tr:first-child td{border-top:none}
-      .foot{margin-top:20px;color:rgba(160,174,192,.85);font-size:10px}
+      .foot{margin-top:18px;color:rgba(160,174,192,.85);font-size:9.5px}
       .pagebreak{break-before: page}
+      .small{font-size:10.5px}
       @media print{
-        .doc{padding:36px 36px 48px}
+        .doc{padding:32px 32px 44px}
         a{color:inherit;text-decoration:none}
       }
     </style>
@@ -89,7 +89,7 @@
   <body>
     <main class="doc">
       <div class="logo">
-        <svg viewBox="0 0 720 180" width="300" height="75" aria-label="Daifend">
+        <svg viewBox="0 0 720 180" width="280" height="70" aria-label="Daifend">
           <g transform="translate(40,35)">
             <path d="M20 10V100" stroke="#F5F7FA" stroke-width="8" stroke-linecap="round"/>
             <path d="M20 10C75 10 100 35 100 55C100 75 75 100 20 100" stroke="#F5F7FA" stroke-width="8" stroke-linecap="round"/>
@@ -97,113 +97,218 @@
             <line x1="100" y1="55" x2="82" y2="55" stroke="#050505" stroke-width="8"/>
           </g>
           <g fill="#F5F7FA">
-            <text x="180" y="82" font-family="Inter, Helvetica, Arial, sans-serif" font-size="56" letter-spacing="10" font-weight="300">DAIFEND</text>
+            <text x="180" y="82" font-family="Helvetica, Arial, sans-serif" font-size="56" letter-spacing="10" font-weight="300">DAIFEND</text>
           </g>
-          <text x="182" y="122" font-family="Inter, Helvetica, Arial, sans-serif" font-size="18" letter-spacing="6" fill="#9CA3AF" font-weight="300">SECURING THE AI RUNTIME</text>
+          <text x="182" y="122" font-family="Helvetica, Arial, sans-serif" font-size="18" letter-spacing="6" fill="#9CA3AF" font-weight="300">SECURING THE AI RUNTIME</text>
         </svg>
         <div>
           <div class="pill blue">Platform guide</div>
-          <div class="tag" style="margin-top:8px">Features &amp; how to use • 2026</div>
+          <div class="tag" style="margin-top:6px">Features &amp; how to use • May 2026 • v1.1</div>
         </div>
       </div>
 
       <div class="rule"></div>
 
-      <h1>Features &amp; how to use</h1>
-      <p class="muted">
-        <b>Daifend</b> is an AI-native security platform: a <b>Next.js console</b> plus <b>production-structured backends</b>
-        (API gateway, auth, telemetry, memory integrity, agent runtime, threat/RAG, self-healing, notifications), with optional
-        <b>ClickHouse</b>, <b>Kafka/Redpanda</b>, <b>NATS</b>, <b>Qdrant</b>, <b>OPA</b>, <b>OpenTelemetry</b>, and <b>gRPC</b> for memory analyze.
+      <h1>Daifend platform guide</h1>
+      <p class="muted small">
+        <b>Daifend</b> is enterprise AI security infrastructure: <b>memory integrity</b> (embedding drift, outliers, prompt-injection signals),
+        <b>agent runtime policy</b>, <b>RAG / threat analysis</b>, <b>self-healing orchestration</b>, <b>real-time telemetry</b>, and a
+        <b>Next.js</b> operator console. Backends are structured for multi-tenant operation with an <b>API gateway</b>, optional <b>OPA</b>,
+        <b>OpenTelemetry</b>, <b>Redis</b> quotas, <b>PostgreSQL</b>, <b>ClickHouse</b>, <b>NATS</b>, <b>Kafka/Redpanda</b>, and <b>gRPC</b> on the memory path.
       </p>
 
-      <div class="grid cols-2" style="margin-top:14px">
+      <h2>1. Feature catalog</h2>
+      <div class="rule"></div>
+
+      <div class="grid cols-2">
         <div class="panel">
-          <h3>Console (UI)</h3>
+          <h3>Web console (@daifend/web)</h3>
           <ul>
-            <li><b>Dashboard</b> — trust timeline, drift matrix, threat ticker, runtime posture, self-healing feed.</li>
+            <li><b>Dashboard</b> — trust timeline, semantic drift matrix, threat ticker, runtime posture, self-healing feed, metrics series.</li>
             <li><b>Modules</b> — AI Memory Security, Agent Runtime, Threat Intel, Incidents, Self-Healing, Research Lab, Live Simulation, Architecture, API Integrations, Settings.</li>
-            <li><b>Telemetry</b> — <span class="mono">demo</span> (Node mock) or <span class="mono">live</span> (Python service + Socket.IO).</li>
-            <li><b>Simulation</b> — investor-style attack spike + healing visualization.</li>
+            <li><b>Telemetry client</b> — Socket.IO to telemetry service; <span class="mono">demo</span> vs <span class="mono">live/enterprise</span> ingest modes.</li>
+            <li><b>Strict mode</b> — <span class="mono">NEXT_PUBLIC_TELEMETRY_STRICT=true</span> disables offline UI “fallback” simulation when the socket is down.</li>
+            <li><b>Security headers</b> — CSP and related headers via Next.js config (tune <span class="mono">connect-src</span> for your API hosts).</li>
+            <li><b>Prisma</b> — optional app DB access when <span class="mono">DATABASE_URL</span> is set (e.g. health routes).</li>
           </ul>
         </div>
         <div class="panel">
-          <h3>Backend &amp; data plane</h3>
+          <h3>API gateway</h3>
           <ul>
-            <li><b>API gateway</b> — JWT / OIDC JWKS, Redis rate limits, optional mTLS to engines, optional gRPC to memory.</li>
-            <li><b>Engines</b> — Memory integrity (numpy + optional Qdrant), agent policy + <b>OPA</b>, RAG scan, threat correlate, healing workflows.</li>
-            <li><b>Persistence</b> — PostgreSQL + Alembic; telemetry to ClickHouse; streams via NATS/Kafka.</li>
-            <li><b>Web DB access</b> — Prisma in <span class="mono">apps/web</span>; <span class="mono">GET /api/health/db</span> when <span class="mono">DATABASE_URL</span> is set.</li>
+            <li><b>Authentication</b> — <span class="mono">Bearer</span> JWT (HS256 from auth-service or OIDC via <span class="mono">OIDC_JWKS_URL</span>); dev <span class="mono">X-Internal-Token</span>.</li>
+            <li><b>Tenant binding</b> — <span class="mono">X-Tenant-Id</span> must align with JWT <span class="mono">tenant_id</span> (except internal token path).</li>
+            <li><b>RBAC</b> — route-level permission checks (<span class="mono">memory:*</span>, <span class="mono">engine:invoke</span>, <span class="mono">telemetry:read</span>, etc.).</li>
+            <li><b>OPA</b> — optional <span class="mono">OPA_URL</span> POST to <span class="mono">/v1/data/daifend/gateway/allow</span> (see <span class="mono">infrastructure/opa/policies/daifend/gateway.rego</span>).</li>
+            <li><b>Rate limits</b> — SlowAPI + Redis (<span class="mono">REDIS_URL</span>); per-tenant API minute quota + optional memory-scan hourly quota (<span class="mono">daifend_core.quota</span>).</li>
+            <li><b>Proxy &amp; resilience</b> — HTTPX upstream with retries; security headers on responses; optional Sentry (<span class="mono">SENTRY_DSN</span>).</li>
+            <li><b>gRPC</b> — memory analyze can use <span class="mono">MEMORY_GRPC_TARGET</span> when configured.</li>
           </ul>
         </div>
+      </div>
+
+      <div class="grid cols-2" style="margin-top:11px">
+        <div class="panel">
+          <h3>Auth service</h3>
+          <ul>
+            <li><b>POST /v1/oauth/token</b> — <span class="mono">client_credentials</span> (access + refresh), <span class="mono">refresh_token</span> (rotation), <span class="mono">api_key</span> (exchange stored key for JWT).</li>
+            <li><b>JWT claims</b> — <span class="mono">scope</span> and <span class="mono">permissions</span> for gateway RBAC; defaults configurable via <span class="mono">DAIFEND_DEFAULT_PERMISSIONS</span>.</li>
+            <li><b>API keys</b> — SHA-256 hash in <span class="mono">api_keys</span>; scopes JSON drive token permissions. Requires <span class="mono">DATABASE_URL</span> on auth-service.</li>
+            <li><b>Refresh storage</b> — in-process or <span class="mono">REDIS_URL</span> for horizontal scale.</li>
+            <li><b>POST /v1/introspect</b> — token active flag and claims summary.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Memory integrity engine</h3>
+          <ul>
+            <li><b>REST</b> — <span class="mono">POST /v1/analyze</span> (embeddings + optional text samples); scan, reports, feed, incidents, rollback APIs.</li>
+            <li><b>Analysis</b> — deterministic numpy/sklearn pipeline: drift, clustering, outliers, poisoning probability, retrieval anomaly, prompt-injection heuristics.</li>
+            <li><b>Explainability</b> — JSON <span class="mono">explainability</span> block (summary + weighted factors) on analyze responses for auditors.</li>
+            <li><b>Qdrant / vectors</b> — optional connector; health exposes vector reachability.</li>
+            <li><b>Persistence</b> — PostgreSQL reports/snapshots; optional ClickHouse/NATS integration per deployment.</li>
+            <li><b>gRPC</b> — <span class="mono">daifend.v1.MemoryIntegrity/Analyze</span> for high-throughput internal calls.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid cols-2" style="margin-top:11px">
+        <div class="panel">
+          <h3>Other engines</h3>
+          <ul>
+            <li><b>Agent runtime</b> — tool allowlists, argument safety, optional OPA for agent policy package.</li>
+            <li><b>Threat engine</b> — RAG document scan and threat correlation APIs.</li>
+            <li><b>Self-healing</b> — workflow orchestration (rollback, containment patterns).</li>
+            <li><b>Notification</b> — ingress for alerts (Slack/PagerDuty-style adapters extend here).</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Telemetry service</h3>
+          <ul>
+            <li><b>Socket.IO</b> — <span class="mono">telemetry:hello</span>, <span class="mono">telemetry:batch</span>; ingest mode in hello payload.</li>
+            <li><b>Demo mode</b> — synthetic batches for local UI only (<span class="mono">TELEMETRY_INGEST_MODE=demo</span>).</li>
+            <li><b>Enterprise mode</b> — NATS-only (no RNG telemetry); <span class="mono">TELEMETRY_INGEST_MODE=enterprise</span>.</li>
+            <li><b>Sinks</b> — ClickHouse <span class="mono">daifend.telemetry_events_raw</span>; Kafka topic <span class="mono">daifend.telemetry.raw</span>.</li>
+            <li><b>DLQ</b> — failed ClickHouse or Kafka publish can be written to <span class="mono">KAFKA_TELEMETRY_DLQ_TOPIC</span> (default <span class="mono">daifend.telemetry.dlq</span>).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:11px">
+        <h3>Shared platform &amp; compliance (repo)</h3>
+        <ul>
+          <li><b>daifend-core</b> — SQLAlchemy models, Alembic migrations, sync DB helpers, quota helpers, API key verification, HTTP/Observability utilities.</li>
+          <li><b>TypeScript packages</b> — <span class="mono">@daifend/types</span> (telemetry event unions, SDK types), <span class="mono">@daifend/sdk</span>, config, security, telemetry helpers.</li>
+          <li><b>Infrastructure</b> — Docker Compose, Kubernetes base, Helm starter, Terraform VPC baseline, OPA policies, ClickHouse init, GitOps Argo CD example.</li>
+          <li><b>CI</b> — web lint/build, Python tests, Bandit, Trivy FS scan, CycloneDX SBOM (Syft); Dependabot for npm, Actions, pip.</li>
+          <li><b>Documentation</b> — <span class="mono">COMPLIANCE.md</span> operator notes; <span class="mono">docs/API-CONTRACTS.md</span>, <span class="mono">RUNBOOK.md</span>, <span class="mono">ONBOARDING.md</span>, etc.</li>
+        </ul>
       </div>
 
       <div class="pagebreak"></div>
 
-      <h2>How to use — quick start</h2>
+      <h2>2. How to use — getting started</h2>
       <div class="rule"></div>
 
-      <h3>Prerequisites</h3>
-      <p class="muted">Node 20+, Python 3.12+ (for engines), Docker (optional, full stack).</p>
+      <h3>2.1 Prerequisites</h3>
+      <p class="muted small">Node 22+ (see repo), Python 3.12+ for services, Docker for full stack. Copy <span class="mono">.env.example</span> to <span class="mono">.env</span> at repo root.</p>
 
-      <h3>1) UI + demo telemetry (lightweight)</h3>
-      <pre class="cmd">cp .env.example .env
-npm install
+      <h3>2.2 Lightweight: UI + demo telemetry</h3>
+      <pre class="cmd">npm install
 npm run dev
 npm run telemetry:demo --workspace=@daifend/web</pre>
-      <p class="muted">Open <span class="mono">http://127.0.0.1:3000</span>. Set <span class="mono">NEXT_PUBLIC_TELEMETRY_URL</span> if the mock server is not on port 4001.</p>
+      <p class="muted small">Console: <span class="mono">http://127.0.0.1:3000</span>. Point <span class="mono">NEXT_PUBLIC_TELEMETRY_URL</span> at your telemetry port if not 4001.</p>
 
-      <h3>2) Full stack (Docker Compose)</h3>
+      <h3>2.3 Full stack: Docker Compose</h3>
       <pre class="cmd">docker compose up -d --build</pre>
-      <table class="table" style="margin-top:10px">
-        <tr><th>URL / port</th><td>Purpose</td></tr>
+      <table class="table" style="margin-top:8px">
+        <tr><th>Endpoint</th><td>Purpose</td></tr>
         <tr><td class="mono">127.0.0.1:3000</td><td>Web console</td></tr>
-        <tr><td class="mono">127.0.0.1:8080</td><td>API gateway (<span class="mono">/health</span>)</td></tr>
+        <tr><td class="mono">127.0.0.1:8080</td><td>API gateway (<span class="mono">/health</span>, <span class="mono">/ready</span>)</td></tr>
+        <tr><td class="mono">127.0.0.1:8001</td><td>Auth service</td></tr>
         <tr><td class="mono">127.0.0.1:4001</td><td>Telemetry (Socket.IO)</td></tr>
-        <tr><td class="mono">127.0.0.1:16686</td><td>Jaeger (traces)</td></tr>
-        <tr><td class="mono">127.0.0.1:8181</td><td>OPA (agent policy)</td></tr>
+        <tr><td class="mono">127.0.0.1:16686</td><td>Jaeger UI (OTLP HTTP 4318)</td></tr>
+        <tr><td class="mono">127.0.0.1:8181</td><td>OPA (<span class="mono">/v1/data/...</span>)</td></tr>
         <tr><td class="mono">127.0.0.1:8123</td><td>ClickHouse HTTP</td></tr>
-        <tr><td class="mono">127.0.0.1:19092</td><td>Kafka API (Redpanda)</td></tr>
+        <tr><td class="mono">127.0.0.1:19092</td><td>Redpanda Kafka API</td></tr>
+        <tr><td class="mono">127.0.0.1:5432</td><td>PostgreSQL</td></tr>
       </table>
-      <p class="muted">Compose sets <span class="mono">NEXT_PUBLIC_DAIFEND_MODE=live</span>, engine service tokens, and <span class="mono">MEMORY_GRPC_TARGET</span> for analyze via gRPC. See <span class="mono">docs/LOCAL_DEV.md</span> and <span class="mono">docs/PHASE3.md</span>.</p>
+      <p class="muted small">Compose wires gateway to Redis, OPA, Postgres (quotas/API keys), engines, and telemetry. Set web <span class="mono">NEXT_PUBLIC_DAIFEND_MODE=live</span> for Python-backed telemetry in the UI.</p>
 
-      <h3>3) Database migrations (Postgres)</h3>
+      <h3>2.4 Database migrations</h3>
       <pre class="cmd">cd packages/daifend-core &amp;&amp; pip install -e .
 export DATABASE_URL=postgresql://daifend:daifend@localhost:5432/daifend
 alembic upgrade head</pre>
+      <p class="muted small">Use <span class="mono">postgresql+psycopg://</span> URLs in Python services where async/sync drivers differ; Alembic typically uses sync postgres URL.</p>
 
-      <h3>4) Prisma client (web)</h3>
+      <h3>2.5 Prisma (web workspace)</h3>
       <pre class="cmd">export DATABASE_URL=postgresql://daifend:daifend@localhost:5432/daifend
 npm run db:generate --workspace=@daifend/web</pre>
-      <p class="muted">Health: <span class="mono">GET /api/health/db</span> on the Next app.</p>
 
       <div class="pagebreak"></div>
 
-      <h2>API gateway (summary)</h2>
+      <h2>3. Authentication &amp; calling the API</h2>
       <div class="rule"></div>
-      <p class="muted">Base URL: <span class="mono">http://127.0.0.1:8080</span> (adjust for deploy). Send <span class="mono">X-Tenant-Id</span>. Authenticate with <span class="mono">Authorization: Bearer &lt;token&gt;</span> from <span class="mono">POST /v1/oauth/token</span>, or (dev) <span class="mono">X-Internal-Token</span> matching <span class="mono">INTERNAL_SERVICE_TOKEN</span>.</p>
-      <table class="table">
-        <tr><th>POST</th><td><span class="mono">/v1/oauth/token</span> — obtain access token</td></tr>
-        <tr><th>POST</th><td><span class="mono">/v1/memory-integrity/analyze</span> — memory / embedding integrity (gRPC if <span class="mono">MEMORY_GRPC_TARGET</span> set)</td></tr>
-        <tr><th>POST</th><td><span class="mono">/v1/agent-runtime/validate-action</span> — tool / policy (+ OPA when configured)</td></tr>
-        <tr><th>POST</th><td><span class="mono">/v1/rag/scan-document</span>, <span class="mono">/v1/threats/correlate</span></td></tr>
-        <tr><th>POST</th><td><span class="mono">/v1/self-healing/workflows</span>, <span class="mono">/v1/notify</span></td></tr>
-      </table>
-      <p class="muted">TypeScript contracts: package <span class="mono">@daifend/types</span>; client helper: <span class="mono">@daifend/sdk</span>. Full detail: <span class="mono">docs/API.md</span>.</p>
 
-      <h2>Documentation index</h2>
+      <h3>3.1 Client credentials (development)</h3>
+      <pre class="cmd">curl -s -X POST http://127.0.0.1:8080/v1/oauth/token \
+  -H "Content-Type: application/json" \
+  -d '{"tenantId":"default","grantType":"client_credentials"}'</pre>
+      <p class="muted small">In production, supply <span class="mono">clientSecret</span> when <span class="mono">DAIFEND_ENV</span> is not development. Response includes <span class="mono">accessToken</span> and <span class="mono">refreshToken</span>.</p>
+
+      <h3>3.2 API key exchange</h3>
+      <pre class="cmd">curl -s -X POST http://127.0.0.1:8001/v1/oauth/token \
+  -H "Content-Type: application/json" \
+  -d '{"tenantId":"&lt;tenant&gt;","grantType":"api_key","apiKey":"&lt;secret&gt;"}'</pre>
+      <p class="muted small">Auth-service must reach Postgres with a valid <span class="mono">api_keys</span> row (hashed key, scopes JSON). Token permissions mirror stored scopes.</p>
+
+      <h3>3.3 Gateway request</h3>
+      <pre class="cmd">curl -s http://127.0.0.1:8080/v1/memory-integrity/reports \
+  -H "Authorization: Bearer &lt;accessToken&gt;" \
+  -H "X-Tenant-Id: default"</pre>
+      <p class="muted small">Internal-only engine routes expect <span class="mono">X-Internal-Token</span> matching <span class="mono">INTERNAL_SERVICE_TOKEN</span> when engines enforce it. Gateway can forward that header to upstreams.</p>
+
+      <h3>3.4 Telemetry (Socket.IO)</h3>
+      <p class="muted small">Connect a Socket.IO client to the telemetry service URL. On connect, server emits <span class="mono">telemetry:hello</span> (<span class="mono">mode</span>: <span class="mono">demo</span> | <span class="mono">enterprise</span> | …). Events arrive on <span class="mono">telemetry:batch</span>; include <span class="mono">tenantId</span> on each event for sink isolation.</p>
+
+      <h2>4. Key environment variables (reference)</h2>
       <div class="rule"></div>
-      <ul>
-        <li><span class="mono">README.md</span> — repo layout &amp; commands</li>
-        <li><span class="mono">docs/ARCHITECTURE.md</span> — system diagram &amp; data flow</li>
-        <li><span class="mono">docs/LOCAL_DEV.md</span> — ports, env, debugging</li>
-        <li><span class="mono">docs/API.md</span> — gateway routes &amp; auth</li>
-        <li><span class="mono">docs/HARDENING.md</span> — OTel, Redis, OIDC, ClickHouse, Kafka</li>
-        <li><span class="mono">docs/PHASE3.md</span> — service tokens, mTLS hooks, gRPC, OPA, Prisma</li>
-        <li><span class="mono">docs/GRPC.md</span> — proto &amp; codegen</li>
+      <table class="table">
+        <tr><th class="mono">JWT_SECRET</th><td>Shared between auth-service and gateway for HS256 validation.</td></tr>
+        <tr><th class="mono">INTERNAL_SERVICE_TOKEN</th><td>Service-to-service header; gateway and engines.</td></tr>
+        <tr><th class="mono">REDIS_URL</th><td>Gateway rate limiter + quota backend (optional fallback to memory).</td></tr>
+        <tr><th class="mono">DATABASE_URL</th><td>Postgres for auth (API keys), gateway quotas, persistence.</td></tr>
+        <tr><th class="mono">OPA_URL</th><td>e.g. <span class="mono">http://opa:8181</span>; empty disables OPA (gateway skips policy call).</td></tr>
+        <tr><th class="mono">OIDC_JWKS_URL</th><td>Optional external IdP JWT verification at gateway.</td></tr>
+        <tr><th class="mono">TELEMETRY_INGEST_MODE</th><td><span class="mono">demo</span> vs <span class="mono">enterprise</span> (NATS-only).</td></tr>
+        <tr><th class="mono">KAFKA_BOOTSTRAP_SERVERS</th><td>Enables Kafka sink + DLQ path for telemetry.</td></tr>
+        <tr><th class="mono">OTEL_EXPORTER_OTLP_ENDPOINT</th><td>e.g. Jaeger collector for traces.</td></tr>
+        <tr><th class="mono">NEXT_PUBLIC_API_GATEWAY_URL</th><td>Browser-facing gateway URL for live UI.</td></tr>
+        <tr><th class="mono">NEXT_PUBLIC_TELEMETRY_STRICT</th><td><span class="mono">true</span> — no client-side telemetry fallback.</td></tr>
+      </table>
+
+      <div class="pagebreak"></div>
+
+      <h2>5. Documentation index (repository)</h2>
+      <div class="rule"></div>
+      <ul class="small">
+        <li><span class="mono">README.md</span> — layout, quick start, CI overview.</li>
+        <li><span class="mono">docs/API-CONTRACTS.md</span> — v1 HTTP contracts, telemetry, gRPC index.</li>
+        <li><span class="mono">docs/ENTERPRISE-ARCHITECTURE.md</span> — principles, streaming, K8s, deployment modes.</li>
+        <li><span class="mono">docs/LOCAL_DEV.md</span> — ports, env, local Python services.</li>
+        <li><span class="mono">docs/HARDENING.md</span> — OTel, Redis, OIDC, ClickHouse, Kafka.</li>
+        <li><span class="mono">docs/RUNBOOK.md</span> — health, failure modes, operations.</li>
+        <li><span class="mono">docs/ONBOARDING.md</span> — engineer setup, K8s notes.</li>
+        <li><span class="mono">COMPLIANCE.md</span> — controls summary for operators.</li>
+        <li><span class="mono">docs/GRPC.md</span> — protos and codegen.</li>
       </ul>
 
+      <h2>6. Regenerating this PDF</h2>
+      <div class="rule"></div>
+      <pre class="cmd">npm install
+npm run docs:pdf --workspace=@daifend/web</pre>
+      <p class="muted small">Requires Playwright (Chromium). Output: <span class="mono">docs/Daifend-Platform-Guide.pdf</span> from source <span class="mono">docs/daifend-platform-guide.html</span>.</p>
+
       <div class="foot">
-        Daifend — Platform guide • For the latest behavior, refer to the repository docs alongside this PDF.
+        Daifend — Platform guide v1.1 (May 2026). Behavior is defined by the source repository; verify routes and env vars against your deployment branch.
       </div>
     </main>
   </body>

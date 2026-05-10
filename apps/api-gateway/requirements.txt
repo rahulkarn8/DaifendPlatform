@@ -8,3 +8,6 @@ pydantic>=2.7
 PyJWT[crypto]>=2.9
 grpcio>=1.80
 protobuf>=5.26
+psycopg[binary]>=3.1
+sentry-sdk>=2.0
+tenacity>=8.2

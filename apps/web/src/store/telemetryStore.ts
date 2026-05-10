@@ -33,6 +33,11 @@ function defaultUrl() {
   return process.env.NEXT_PUBLIC_TELEMETRY_URL ?? "http://localhost:4001";
 }
 
+function telemetryStrictBackend(): boolean {
+  const v = process.env.NEXT_PUBLIC_TELEMETRY_STRICT ?? "";
+  return v === "1" || v.toLowerCase() === "true";
+}
+
 export const useTelemetryStore = create<TelemetryState>((set, get) => ({
   status: "disconnected",
   url: defaultUrl(),
@@ -56,7 +61,10 @@ export const useTelemetryStore = create<TelemetryState>((set, get) => ({
     socket.on("connect", () => set({ status: "connected", socket }));
     socket.on("disconnect", () => set({ status: "disconnected" }));
     socket.on("connect_error", () => {
-      // Keep the UI alive even if the mock server isn't running.
+      if (telemetryStrictBackend()) {
+        set({ status: "disconnected", socket: undefined });
+        return;
+      }
       set({ status: "fallback", socket: undefined });
     });
 
@@ -108,6 +116,10 @@ export const useTelemetryStore = create<TelemetryState>((set, get) => ({
     const s = get().socket;
     if (s && get().status === "connected") {
       s.emit("simulation:spike", { intensity });
+      return;
+    }
+
+    if (telemetryStrictBackend()) {
       return;
     }
 

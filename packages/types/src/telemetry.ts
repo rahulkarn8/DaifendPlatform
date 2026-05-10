@@ -43,12 +43,20 @@ export type TelemetryEvent =
         | "restore_trust_baseline";
       incidentId: string;
       progress: number;
+    }
+  | {
+      type: "memory.integrity.report";
+      ts: number;
+      trustScore: number;
+      driftScore: number;
+      poisonedVectors: number;
+      reportId?: string;
     };
 
 export type TelemetryHello = {
   serverTime: number;
   streams: string[];
-  mode: "mock" | "live" | "demo";
+  mode: "mock" | "live" | "demo" | "enterprise";
   tenantId?: string;
 };
 

@@ -1,0 +1,37 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: pip
+    directory: /apps/api-gateway
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: pip
+    directory: /apps/auth-service
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: pip
+    directory: /apps/memory-integrity-engine
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: pip
+    directory: /apps/telemetry-service
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: pip
+    directory: /packages/daifend-core
+    schedule:
+      interval: weekly

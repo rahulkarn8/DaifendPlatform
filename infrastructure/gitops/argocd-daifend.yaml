@@ -1,0 +1,22 @@
+# Example Argo CD Application for Daifend platform manifests (Helm or raw YAML).
+# Replace repo URL, targetRevision, and path with your GitOps repository layout.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: daifend-platform
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/your-org/daifend-gitops.git
+    targetRevision: main
+    path: clusters/production/daifend
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: daifend
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

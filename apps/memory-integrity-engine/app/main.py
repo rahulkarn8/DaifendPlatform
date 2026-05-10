@@ -98,6 +98,57 @@ class RollbackRequest(BaseModel):
     quarantine_only: bool = Field(default=False, validation_alias="quarantineOnly")
 
 
+def _explainability_block(result: dict[str, Any]) -> dict[str, Any]:
+    """Human-oriented factor summary for auditors (numeric pipeline is source of truth)."""
+    pp = float(result.get("poisoningProbability") or 0.0)
+    drift = float(result.get("semanticDrift") or 0.0)
+    risk = float(result.get("poisonedClusterRisk") or 0.0)
+    ret = float(result.get("retrievalAnomalyScore") or 0.0)
+    factors: list[dict[str, Any]] = []
+    if pp >= 0.35:
+        factors.append(
+            {
+                "code": "poisoning_probability",
+                "weight": round(min(1.0, pp), 3),
+                "detail": "Composite poisoning model exceeds comfort threshold; review cluster isolation and sources.",
+            }
+        )
+    if drift >= 0.12:
+        factors.append(
+            {
+                "code": "semantic_drift",
+                "weight": round(min(1.0, drift), 3),
+                "detail": "Centroid drift from baseline suggests distribution shift or targeted tampering.",
+            }
+        )
+    if risk >= 0.2:
+        factors.append(
+            {
+                "code": "cluster_isolation",
+                "weight": round(min(1.0, risk), 3),
+                "detail": "Outlier / isolation risk in embedding space; consider quarantine of flagged indices.",
+            }
+        )
+    if ret >= 0.25:
+        factors.append(
+            {
+                "code": "retrieval_anomaly",
+                "weight": round(min(1.0, ret), 3),
+                "detail": "Retrieval path anomaly score elevated; audit rerankers and grounding.",
+            }
+        )
+    parts: list[str] = []
+    if pp >= 0.45:
+        parts.append("Elevated poisoning probability warrants immediate memory forensics.")
+    elif pp >= 0.25:
+        parts.append("Moderate poisoning risk; schedule targeted review of anomalous segments.")
+    if drift >= 0.18:
+        parts.append("Semantic drift is high relative to baseline.")
+    if not parts:
+        parts.append("Integrity signals within routine bounds; continue monitoring.")
+    return {"summary": " ".join(parts), "factors": factors}
+
+
 def _analyze_result_response(result: dict[str, Any]) -> dict[str, Any]:
     return {
         "trustScore": result["trustScore"],
@@ -117,6 +168,7 @@ def _analyze_result_response(result: dict[str, Any]) -> dict[str, Any]:
         "centroid": result.get("centroid"),
         "vectorCount": result.get("vectorCount"),
         "embeddingDim": result.get("embeddingDim"),
+        "explainability": _explainability_block(result),
     }
 
 
