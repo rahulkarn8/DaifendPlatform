@@ -1,4 +1,4 @@
-fastapi>=0.115
+fastapi>=0.136.1
 uvicorn[standard]>=0.30
 python-socketio>=5.11
 nats-py>=2.7
