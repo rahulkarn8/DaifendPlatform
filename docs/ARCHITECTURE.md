@@ -52,14 +52,14 @@ flowchart TB
   Engines --> S3
 ```
 
-## Demo vs production telemetry
+## Telemetry sources
 
 | Mode | Source | Use |
 |------|--------|-----|
-| `demo` | `apps/web/scripts/telemetry-server.ts` | Investor / offline UI |
-| `live` | `apps/telemetry-service` (Python) | Real stack + NATS |
+| `demo` | `apps/web/scripts/telemetry-server.ts` | **Engineer sandbox only** — synthetic batches when no Python telemetry is running |
+| `live` | `apps/telemetry-service` (Python) | **Default for clients** — Socket.IO to the browser; pair with `TELEMETRY_INGEST_MODE=enterprise` and NATS publishers |
 
-Set `NEXT_PUBLIC_DAIFEND_MODE` and `NEXT_PUBLIC_TELEMETRY_URL` accordingly.
+Set `NEXT_PUBLIC_DAIFEND_MODE` and `NEXT_PUBLIC_TELEMETRY_URL` accordingly. Prefer **`NEXT_PUBLIC_TELEMETRY_STRICT=true`** for customer-facing builds.
 
 ## Security layers
 

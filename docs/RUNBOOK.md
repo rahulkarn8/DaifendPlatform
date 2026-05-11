@@ -21,8 +21,8 @@ Apply **before** rolling out services that depend on new columns (`002`, `003`, 
 
 ## Telemetry modes
 
-- **Development / demo**: `TELEMETRY_INGEST_MODE=demo` (synthetic batches; local UI only).
-- **Production**: `TELEMETRY_INGEST_MODE=enterprise` and `DAIFEND_ENV=production` — **only** NATS-driven events.
+- **Default (repository / Compose):** `TELEMETRY_INGEST_MODE=enterprise` — **only** NATS-driven events; no RNG batches.
+- **Sandbox only:** `TELEMETRY_INGEST_MODE=demo` or `docker-compose.sandbox.yml` — synthetic batches for local UI experiments, **not** for customer-facing environments.
 
 Verify publishers:
 

@@ -77,7 +77,7 @@ export function MobileNav() {
                         <span className="flex-1">{item.label}</span>
                         {item.key === "simulation" ? (
                           <span className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground group-hover:text-foreground/80">
-                            demo
+                            lab
                           </span>
                         ) : null}
                       </Link>

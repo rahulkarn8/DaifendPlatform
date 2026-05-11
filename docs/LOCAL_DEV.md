@@ -19,9 +19,12 @@ Copy `.env.example` to `.env` at the repo root. Key variables:
 
 | Variable | Description |
 |----------|-------------|
-| `NEXT_PUBLIC_DAIFEND_MODE` | `demo` (Node mock) or `live` (Python telemetry) |
+| `NEXT_PUBLIC_DAIFEND_MODE` | Default **`live`**. Use `demo` only for UI work without backends (legacy in-process mock). |
+| `NEXT_PUBLIC_TELEMETRY_STRICT` | `true` recommended for customer-facing builds (no client-side telemetry fallback). |
 | `NEXT_PUBLIC_TELEMETRY_URL` | Default `http://127.0.0.1:4001` |
 | `NEXT_PUBLIC_API_GATEWAY_URL` | e.g. `http://127.0.0.1:8080` |
+| `DAIFEND_ENV` | **`production`** in default Compose — auth requires `clientSecret` on token. Use `docker-compose.sandbox.yml` overlay for relaxed local auth. |
+| `TELEMETRY_INGEST_MODE` | Default **`enterprise`** in Compose (NATS-only). Set `demo` or use sandbox overlay only for synthetic UI experiments. |
 | `DATABASE_URL` | Sync URL for Alembic (strip `+asyncpg` for CLI) |
 | `JWT_SECRET` / `INTERNAL_SERVICE_TOKEN` | Must match gateway + auth |
 
@@ -48,16 +51,26 @@ alembic upgrade head
 
 ## Calling the gateway from scripts
 
-1. `POST /v1/oauth/token` with body `{ "tenantId": "...", "grantType": "client_credentials" }`
+1. `POST /v1/oauth/token` with body `{ "tenantId": "...", "grantType": "client_credentials", "clientSecret": "..." }` when `DAIFEND_ENV=production` (default in Compose). Any non-empty secret satisfies the gate until a real client registry is wired.
 2. Use `accessToken` as `Authorization: Bearer ...` on `/v1/*`
 
-Or set `X-Internal-Token` + `X-Tenant-Id` to match `INTERNAL_SERVICE_TOKEN` (development only).
+Or set `X-Internal-Token` + `X-Tenant-Id` to match `INTERNAL_SERVICE_TOKEN` (break-glass / automation only — scope tightly in production).
+
+With `DAIFEND_ENV=development` (e.g. sandbox Compose overlay), `clientSecret` may be omitted for local convenience.
 
 ## Docker Compose
 
 ```bash
 docker compose up -d --build
 docker compose logs -f api-gateway
+```
+
+**Defaults (serious / production-like):** enterprise telemetry, strict web telemetry, `DAIFEND_ENV=production` for auth (token calls need `clientSecret`). See root `docker-compose.yml` comments.
+
+**Local sandbox overlay** (synthetic telemetry + relaxed auth — not for clients):
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.sandbox.yml up -d
 ```
 
 - **Jaeger UI:** `http://127.0.0.1:16686` (OTLP HTTP `4318` — set `OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4318` in Compose for services).

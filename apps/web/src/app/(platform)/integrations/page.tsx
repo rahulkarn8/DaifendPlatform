@@ -21,7 +21,7 @@ export default function IntegrationsPage() {
       <PageHeader
         eyebrow="API Integrations"
         title="Connect your AI stack"
-        description="Mock connectors for model providers, vector databases, orchestration layers, and SOC destinations. These integrations will power Architecture flows and incident enrichment."
+        description="Connector framework for model providers, vector databases, orchestration layers, and SOC destinations. Shipped stubs are placeholders — wire your vendor SDKs and credentials here for production incident enrichment."
       />
 
       <div className="grid gap-4 md:grid-cols-12">

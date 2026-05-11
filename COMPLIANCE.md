@@ -2,6 +2,8 @@
 
 This document summarizes controls reflected in the repository. It is not legal advice; map items to your SOC 2 / ISO 27001 / FedRAMP control families.
 
+**Product posture:** defaults in `docker-compose.yml`, `.env.example`, and `@daifend/config` target **serious** installs (enterprise telemetry, strict UI telemetry, production-style auth in Compose). Synthetic telemetry and relaxed auth are **opt-in** via `docker-compose.sandbox.yml` or explicit environment overrides — not the default path for customer-facing deployments.
+
 ## Authentication and authorization
 
 - **JWT**: Access tokens carry `scope` and `permissions`; the API gateway enforces route-level permission checks and optional **OPA** (`OPA_URL`) for centralized policy.

@@ -175,7 +175,9 @@ server.on("error", (err: NodeJS.ErrnoException) => {
 
 server.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  console.log(`Daifend mock telemetry listening on http://localhost:${PORT}`);
+  console.log(
+    `Daifend sandbox telemetry (synthetic only — not for production) on http://localhost:${PORT}`,
+  );
   // eslint-disable-next-line no-console
   console.log(`CORS origin: ${ORIGIN}`);
 });

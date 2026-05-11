@@ -368,7 +368,7 @@ export function SimulationClient() {
                     <div className="text-sm">Upload document</div>
                   </div>
                   <div className="mt-1 text-xs text-muted-foreground">
-                    PDF/text supported (mock parse). This drives the simulation flow.
+                    PDF/text supported (placeholder parse for lab scenarios). This drives the simulation flow.
                   </div>
                 </div>
                 <input

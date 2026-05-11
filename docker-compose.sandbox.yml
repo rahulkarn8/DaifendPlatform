@@ -1,0 +1,17 @@
+# Optional overlay: synthetic telemetry + relaxed auth for local UI experiments only.
+# Usage: docker compose -f docker-compose.yml -f docker-compose.sandbox.yml up -d
+# Do not use this profile for customer-facing or production-like environments.
+
+services:
+  auth-service:
+    environment:
+      DAIFEND_ENV: development
+
+  telemetry-service:
+    environment:
+      DAIFEND_ENV: development
+      TELEMETRY_INGEST_MODE: demo
+
+  web:
+    environment:
+      NEXT_PUBLIC_TELEMETRY_STRICT: "false"

@@ -1,4 +1,6 @@
-# Daifend stack — see docs/LOCAL_DEV.md and docs/HARDENING.md
+# Daifend stack — defaults target serious deployments (enterprise telemetry, strict UI).
+# Synthetic / relaxed sandbox: docker compose -f docker-compose.yml -f docker-compose.sandbox.yml up -d
+# See docs/LOCAL_DEV.md and docs/HARDENING.md
 services:
   postgres:
     image: postgres:16-alpine
@@ -101,8 +103,8 @@ services:
       context: .
       dockerfile: apps/auth-service/Dockerfile
     environment:
-      JWT_SECRET: dev-secret-change-in-production
-      DAIFEND_ENV: development
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production}
+      DAIFEND_ENV: ${DAIFEND_ENV:-production}
       DATABASE_URL: postgresql+psycopg://daifend:daifend@postgres:5432/daifend
       REDIS_URL: redis://redis:6379/1
     ports:
@@ -119,7 +121,7 @@ services:
       dockerfile: apps/threat-engine/Dockerfile
     environment:
       ENGINE_REQUIRE_INTERNAL_TOKEN: "true"
-      INTERNAL_SERVICE_TOKEN: dev-internal-token
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-dev-internal-token}
     ports:
       - "8002:8002"
 
@@ -134,7 +136,7 @@ services:
       CLICKHOUSE_HTTP_URL: http://clickhouse:8123
       OTEL_EXPORTER_OTLP_ENDPOINT: http://jaeger:4318
       ENGINE_REQUIRE_INTERNAL_TOKEN: "true"
-      INTERNAL_SERVICE_TOKEN: dev-internal-token
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-dev-internal-token}
     ports:
       - "8003:8003"
       - "50051:50051"
@@ -151,7 +153,7 @@ services:
       dockerfile: apps/agent-runtime-engine/Dockerfile
     environment:
       ENGINE_REQUIRE_INTERNAL_TOKEN: "true"
-      INTERNAL_SERVICE_TOKEN: dev-internal-token
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-dev-internal-token}
       OPA_URL: http://opa:8181
     ports:
       - "8004:8004"
@@ -164,7 +166,7 @@ services:
       dockerfile: apps/self-healing-engine/Dockerfile
     environment:
       ENGINE_REQUIRE_INTERNAL_TOKEN: "true"
-      INTERNAL_SERVICE_TOKEN: dev-internal-token
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-dev-internal-token}
       MEMORY_INTEGRITY_URL: http://memory-integrity-engine:8003
     ports:
       - "8005:8005"
@@ -177,7 +179,7 @@ services:
       dockerfile: apps/notification-service/Dockerfile
     environment:
       ENGINE_REQUIRE_INTERNAL_TOKEN: "true"
-      INTERNAL_SERVICE_TOKEN: dev-internal-token
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-dev-internal-token}
     ports:
       - "8006:8006"
 
@@ -186,8 +188,8 @@ services:
       context: .
       dockerfile: apps/telemetry-service/Dockerfile
     environment:
-      DAIFEND_ENV: development
-      TELEMETRY_INGEST_MODE: demo
+      DAIFEND_ENV: ${DAIFEND_ENV:-production}
+      TELEMETRY_INGEST_MODE: ${TELEMETRY_INGEST_MODE:-enterprise}
       NATS_URL: nats://nats:4222
       TELEMETRY_ORIGINS: http://127.0.0.1:3000,http://localhost:3000
       CLICKHOUSE_HTTP_URL: http://clickhouse:8123
@@ -207,8 +209,8 @@ services:
       context: .
       dockerfile: apps/api-gateway/Dockerfile
     environment:
-      JWT_SECRET: dev-secret-change-in-production
-      INTERNAL_SERVICE_TOKEN: dev-internal-token
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production}
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-dev-internal-token}
       GATEWAY_SEND_INTERNAL_TOKEN: "true"
       REDIS_URL: redis://redis:6379/0
       DATABASE_URL: postgresql+psycopg://daifend:daifend@postgres:5432/daifend
@@ -243,7 +245,8 @@ services:
     volumes:
       - ./:/app
     environment:
-      NEXT_PUBLIC_DAIFEND_MODE: live
+      NEXT_PUBLIC_DAIFEND_MODE: ${NEXT_PUBLIC_DAIFEND_MODE:-live}
+      NEXT_PUBLIC_TELEMETRY_STRICT: ${NEXT_PUBLIC_TELEMETRY_STRICT:-true}
       NEXT_PUBLIC_API_GATEWAY_URL: http://127.0.0.1:8080
       NEXT_PUBLIC_TELEMETRY_URL: http://127.0.0.1:4001
       DATABASE_URL: postgresql://daifend:daifend@postgres:5432/daifend
